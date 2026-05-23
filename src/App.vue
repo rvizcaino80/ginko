@@ -1,7 +1,20 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import AppHeader from '@/components/shared/AppHeader.vue'
 import AiAssistant from '@/components/ai/AiAssistant.vue'
+import { useKeyboardShortcuts } from '@/composables/useKeyboardShortcuts'
+
+const router = useRouter()
+
+useKeyboardShortcuts({
+  n: () => router.push('/orders/new'),
+  Escape: () => {
+    const active = document.querySelector('.p-dialog-mask')
+    if (active) {
+      ;(active as HTMLElement).click?.()
+    }
+  },
+})
 </script>
 
 <template>

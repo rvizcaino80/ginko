@@ -18,7 +18,7 @@ function formatDate(iso: string): string {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <TransitionGroup name="card" tag="div" class="flex flex-col gap-4">
     <Card
       v-for="order in orders"
       :key="order.id"
@@ -36,5 +36,18 @@ function formatDate(iso: string): string {
         <p class="text-gray-400 dark:text-gray-500 mt-2 text-base">{{ formatDate(order.fechaCreacion) }}</p>
       </template>
     </Card>
-  </div>
+  </TransitionGroup>
 </template>
+
+<style scoped>
+.card-enter-active {
+  animation: cardIn 0.3s ease-out;
+}
+.card-leave-active {
+  animation: cardIn 0.2s ease-in reverse;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>

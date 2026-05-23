@@ -17,6 +17,7 @@ const store = useOrderStore()
 const confirmOpen = ref(false)
 const pendingTransition = ref<OrderStatus | null>(null)
 const transitionError = ref('')
+const transitioning = ref(false)
 
 onMounted(() => {
   store.loadOrder(route.params.id as string)
@@ -35,12 +36,15 @@ function requestTransition(estado: OrderStatus) {
 async function confirmTransition() {
   if (!pendingTransition.value || !store.currentOrder) return
   transitionError.value = ''
+  transitioning.value = true
   try {
     await store.transition(store.currentOrder.id, pendingTransition.value)
     confirmOpen.value = false
     pendingTransition.value = null
   } catch (e: unknown) {
     transitionError.value = e instanceof Error ? e.message : 'Error al cambiar el estado'
+  } finally {
+    transitioning.value = false
   }
 }
 
@@ -122,6 +126,7 @@ function formatDate(iso: string): string {
       title="Confirmar cambio de estado"
       :message="`¿Estás seguro de cambiar esta orden a «${pendingTransition ? STATUS_LABELS[pendingTransition] : ''}»?`"
       confirm-text="Cambiar"
+      :loading="transitioning"
       @confirm="confirmTransition"
       @cancel="confirmOpen = false; pendingTransition = null"
     />
