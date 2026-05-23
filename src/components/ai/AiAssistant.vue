@@ -2,19 +2,21 @@
 import { ref, nextTick } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
+import { useOrderStore } from '@/stores/orderStore'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import ScrollPanel from 'primevue/scrollpanel'
 
 const input = ref('')
 const scrollRef = ref<HTMLDivElement>()
-const { messages, thinking, send } = useAi()
+const store = useOrderStore()
+const { messages, thinking, chat } = useAi()
 
 async function handleSend() {
   if (!input.value.trim() || thinking.value) return
   const q = input.value.trim()
   input.value = ''
-  await send(q)
+  await chat(q, store.orders)
   nextTick(() => {
     scrollRef.value?.scrollTo({ top: scrollRef.value.scrollHeight, behavior: 'smooth' })
   })

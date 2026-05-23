@@ -1,12 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PrimeVue from 'primevue/config'
-import Aura from '@primeuix/themes/aura'
 import OrderFilters from '@/components/orders/OrderFilters.vue'
 import { ref } from 'vue'
 
 const global = {
-  plugins: [[PrimeVue, { theme: { preset: Aura } }]],
+  plugins: [PrimeVue] as any,
 }
 
 function createFilters() {

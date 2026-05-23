@@ -1,11 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PrimeVue from 'primevue/config'
-import Aura from '@primeuix/themes/aura'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 
 const global = {
-  plugins: [[PrimeVue, { theme: { preset: Aura } }]],
+  plugins: [PrimeVue] as any,
 }
 
 describe('StatusBadge', () => {
