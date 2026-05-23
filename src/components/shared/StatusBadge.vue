@@ -13,7 +13,7 @@ const colorMap: Record<OrderStatus, string> = {
 }
 
 const classes = computed(() => {
-  const base = 'inline-flex items-center px-2.5 py-0.5 rounded-full font-medium'
+  const base = 'inline-flex items-center px-2.5 py-0.5 rounded-md font-medium'
   return `${base} ${colorMap[props.estado]} ${props.size ?? 'text-sm'}`
 })
 
