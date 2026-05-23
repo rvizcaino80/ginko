@@ -7,8 +7,18 @@ import Tag from 'primevue/tag'
 const props = defineProps<{ estado: OrderStatus; size?: string }>()
 const severity = computed(() => STATUS_SEVERITIES[props.estado])
 const label = computed(() => STATUS_LABELS[props.estado])
+
+const sizeMap: Record<string, string> = {
+  'text-xs': '0.75rem',
+  'text-sm': '0.875rem',
+  'text-base': '1rem',
+  'text-lg': '1.125rem',
+  'text-xl': '1.25rem',
+  'text-2xl': '1.5rem',
+}
+
 const valuePt = computed(() => ({
-  value: { class: `!${props.size ?? 'text-sm'}` },
+  value: { style: { fontSize: sizeMap[props.size ?? 'text-sm'] ?? '0.875rem' } },
 }))
 </script>
 
