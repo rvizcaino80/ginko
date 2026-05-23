@@ -62,16 +62,16 @@ async function handleSend() {
   <div class="flex flex-col h-full bg-white dark:bg-gray-900">
     <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
       <div class="flex items-center gap-2">
-        <Icon icon="mdi:robot-outline" class="text-blue-600 dark:text-blue-400 text-xl" />
+        <Icon icon="mdi:robot-outline" class="text-blue-600 dark:text-blue-400 text-base" />
         <span class="font-semibold">Asistente IA</span>
       </div>
-      <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-xl" />
+      <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-base" />
     </div>
 
     <ScrollPanel class="flex-1">
       <div ref="scrollRef" class="flex flex-col gap-3 p-4">
         <div v-if="messages.length === 0" class="text-center py-8 text-gray-400 dark:text-gray-500 text-base">
-          <Icon icon="mdi:robot-outline" class="text-4xl block mb-3 mx-auto" />
+          <Icon icon="mdi:robot-outline" class="text-2xl block mb-3 mx-auto" />
           <p>Pregúntame sobre tus órdenes de pago.</p>
           <p class="text-sm mt-2">Ej: "Muéstrame la orden ORD-0001"</p>
           <p class="text-sm mt-1">Ej: "Filtra las aprobadas"</p>
