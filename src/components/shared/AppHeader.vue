@@ -20,37 +20,29 @@ const { showAiPanel, toggleAiPanel } = useUiState()
         <img src="/logo.svg" alt="Ginko" class="h-7 w-7" />
         <span>Ginko · Pagos</span>
       </button>
-      <nav class="flex items-center gap-3">
+      <nav class="flex items-center gap-2">
         <Button
           label="Nueva orden"
+          icon="pi pi-plus"
           size="small"
           @click="router.push('/orders/new')"
-        >
-          <template #icon>
-            <Icon icon="mdi:plus" class="w-10 h-10" />
-          </template>
-        </Button>
+        />
         <Button
+          :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
           severity="secondary"
-          size="small"
           variant="outlined"
           :title="isDark ? 'Modo claro' : 'Modo oscuro'"
           @click="toggle"
-        >
-          <template #icon>
-            <Icon :icon="isDark ? 'mdi:weather-sunny' : 'mdi:weather-night'" class="w-10 h-10" />
-          </template>
-        </Button>
+        />
         <Button
           severity="secondary"
-          size="small"
           variant="outlined"
           class="hidden xl:inline-flex"
           :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
           @click="toggleAiPanel"
         >
           <template #icon>
-            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" class="w-10 h-10" />
+            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" />
           </template>
         </Button>
       </nav>
