@@ -16,7 +16,6 @@ body {
 }
 
 .dark {
-  --p-datatable-row-striped-background: var(--color-slate-950);
   --p-datatable-border-color: var(--color-slate-800);
   --p-inputtext-background: var(--color-slate-800);
   --p-select-background: var(--color-slate-800);
@@ -29,19 +28,19 @@ body {
 }
 
 .dark .p-datatable .p-datatable-thead > tr > th {
-  background: var(--color-slate-900) !important;
+  background: #0f172a !important;
 }
 
 .dark .p-datatable .p-datatable-tbody > tr > td {
   background: transparent !important;
 }
 
-.dark .p-datatable .p-datatable-tbody > tr:nth-child(odd) > td {
-  background: transparent !important;
+.dark .p-datatable .p-datatable-tbody > tr:nth-child(even) > td {
+  background: #020617 !important;
 }
 
-.dark .p-datatable .p-datatable-tbody > tr:nth-child(even) > td {
-  background: var(--color-slate-950) !important;
+.dark .p-datatable .p-datatable-tbody > tr:hover > td {
+  background: #1e293b !important;
 }
 
 .dark .p-paginator {
