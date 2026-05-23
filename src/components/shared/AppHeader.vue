@@ -11,41 +11,45 @@ const { showAiPanel, toggleAiPanel } = useUiState()
 </script>
 
 <template>
-  <header class="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-    <div class="flex items-center justify-between h-14 px-6">
-      <button
-        class="flex items-center gap-2 font-semibold tracking-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-        @click="router.push('/')"
+  <header class="flex items-center justify-between h-18 border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 p-6">
+    <button
+      class="flex items-center gap-2 font-semibold tracking-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+      @click="router.push('/')"
+    >
+      <img src="/logo.svg" alt="Ginko" class="h-10 w-auto" />
+    </button>
+
+    <h1 class="text-2xl font-bold">Órdenes de pago</h1>
+
+    <nav class="flex items-center justify-stretch gap-4">
+      <Button
+        label="Nueva orden"
+        icon="pi pi-plus"
+        size="medium"
+        @click="router.push('/orders/new')"
+      />
+      <Button
+        severity="secondary"
+        variant="outlined"
+        :title="isDark ? 'Modo claro' : 'Modo oscuro'"
+        @click="toggle"
       >
-        <img src="/logo.svg" alt="Ginko" class="h-7 w-7" />
-        <span>Ginko · Pagos</span>
-      </button>
-      <nav class="flex items-center gap-2">
-        <Button
-          label="Nueva orden"
-          icon="pi pi-plus"
-          size="small"
-          @click="router.push('/orders/new')"
-        />
-        <Button
-          :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
-          severity="secondary"
-          variant="outlined"
-          :title="isDark ? 'Modo claro' : 'Modo oscuro'"
-          @click="toggle"
-        />
-        <Button
-          severity="secondary"
-          variant="outlined"
-          class="hidden xl:inline-flex"
-          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
-          @click="toggleAiPanel"
-        >
-          <template #icon>
-            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" />
-          </template>
-        </Button>
-      </nav>
-    </div>
+        <template #icon>
+          <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
+        </template>
+      </Button>
+      <Button
+        severity="secondary"
+        variant="outlined"
+        class="hidden xl:flex p-2 transition-all duration-300 ease-in-out"
+        :class="showAiPanel ? 'translate-x-20 opacity-0 pointer-events-none' : 'translate-x-0 opacity-100'"
+        :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
+        @click="toggleAiPanel"
+      >
+        <template #icon>
+          <Icon icon="mdi:sparkles" class="w-6 h-6" />
+        </template>
+      </Button>
+    </nav>
   </header>
 </template>
