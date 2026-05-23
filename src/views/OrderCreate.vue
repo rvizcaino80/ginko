@@ -100,7 +100,7 @@ async function submit() {
               :monto="monto"
               @suggest="(t: string) => concepto = t"
             />
-            <span class="text-sm text-gray-400 dark:text-gray-500">({{ conceptoCount }}/250)</span>
+            <span class="text-sm text-slate-400 dark:text-slate-500">({{ conceptoCount }}/250)</span>
           </div>
         </div>
         <Textarea

@@ -59,8 +59,8 @@ async function handleSend() {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <div class="bg-gray-50 dark:bg-gray-700 flex items-center justify-between p-6 border-b border-gray-300 dark:border-gray-800 h-18">
+  <div class="flex flex-1 flex-col h-full">
+    <div class="bg-slate-50 dark:bg-slate-900 flex items-center justify-between p-6 border-b border-slate-300 dark:border-slate-800 h-18">
       <div class="flex items-center gap-2">
         <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-2xl" />
         <span class="font-semibold">Asistente IA</span>
@@ -69,7 +69,7 @@ async function handleSend() {
 
     <ScrollPanel class="flex-1">
       <div ref="scrollRef" class="flex flex-col gap-3 p-4">
-        <div v-if="messages.length === 0" class="text-center py-8 text-gray-400 dark:text-gray-500 text-base">
+        <div v-if="messages.length === 0" class="text-center py-8 text-slate-400 dark:text-slate-500 text-base">
           <Icon icon="mdi:robot-outline" class="text-5xl block mb-3 mx-auto" />
           <p>Pregúntame sobre tus órdenes de pago.</p>
           <p class="text-sm mt-2">Ej: "Muéstrame la orden ORD-0001"</p>
@@ -86,21 +86,21 @@ async function handleSend() {
             :class="
               msg.role === 'user'
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100'
             "
             v-html="msg.html"
           />
         </div>
         <div v-if="thinking" class="flex justify-start">
-          <div class="rounded-xl px-4 py-3 bg-gray-100 dark:bg-gray-800">
+          <div class="rounded-xl px-4 py-3 bg-slate-100 dark:bg-slate-800">
             <i class="pi pi-spin pi-spinner text-blue-600 dark:text-blue-400" />
-            <span class="ml-2 text-sm text-gray-500">Pensando...</span>
+            <span class="ml-2 text-sm text-slate-500">Pensando...</span>
           </div>
         </div>
       </div>
     </ScrollPanel>
 
-    <div class="border-t border-gray-200 dark:border-gray-800 p-3 flex gap-2">
+    <div class="border-t border-slate-200 dark:border-slate-800 p-3 flex gap-2">
       <InputText
         v-model="input"
         placeholder="Escribe tu consulta..."

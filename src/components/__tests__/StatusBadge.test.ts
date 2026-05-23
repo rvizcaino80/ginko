@@ -23,9 +23,9 @@ describe('StatusBadge', () => {
     expect(wrapper.text()).toContain('Pagada')
   })
 
-  it('aplica clase bg-gray-100 para BORRADOR', () => {
+  it('aplica clase bg-slate-100 para BORRADOR', () => {
     const wrapper = mount(StatusBadge, { props: { estado: 'BORRADOR' } })
-    expect(wrapper.classes()).toContain('bg-gray-100')
+    expect(wrapper.classes()).toContain('bg-slate-100')
   })
 
   it('aplica clase bg-green-100 para APROBADA', () => {

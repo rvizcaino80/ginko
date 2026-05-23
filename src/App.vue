@@ -18,14 +18,14 @@ useKeyboardShortcuts({
 </script>
 
 <template>
-  <div class="min-h-screen flex bg-gray-50 dark:bg-gray-900">
-    <div class="flex flex-col flex-1 min-w-0 bg-white dark:bg-gray-900">
+  <div class="min-h-screen flex bg-slate-50 dark:bg-slate-900">
+    <div class="flex flex-col flex-1 min-w-0 bg-white dark:bg-slate-900">
       <AppHeader />
       <main class="flex-1 p-6 overflow-auto">
         <RouterView />
       </main>
     </div>
-    <aside class="hidden xl:flex bg-gray-100 w-100 border-l border-gray-200 dark:border-gray-800 dark:bg-gray-900">
+    <aside class="hidden xl:flex bg-slate-100 w-100 border-l border-slate-200 dark:border-slate-800 dark:bg-slate-900">
       <AiAssistant />
     </aside>
   </div>

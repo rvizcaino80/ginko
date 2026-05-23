@@ -27,13 +27,13 @@ function formatDate(iso: string): string {
     >
       <template #content>
         <div class="flex items-center justify-between mb-2">
-          <span class="font-mono text-sm text-gray-500 dark:text-gray-400">{{ order.id }}</span>
+          <span class="font-mono text-sm text-slate-500 dark:text-slate-400">{{ order.id }}</span>
           <StatusBadge :estado="order.estado" />
         </div>
         <p class="font-medium mb-1">{{ order.proveedor }}</p>
         <p class="font-mono mb-1">{{ formatCOP(order.monto) }}</p>
-        <p class="text-gray-500 dark:text-gray-400 truncate text-base">{{ order.concepto }}</p>
-        <p class="text-gray-400 dark:text-gray-500 mt-2 text-base">{{ formatDate(order.fechaCreacion) }}</p>
+        <p class="text-slate-500 dark:text-slate-400 truncate text-base">{{ order.concepto }}</p>
+        <p class="text-slate-400 dark:text-slate-500 mt-2 text-base">{{ formatDate(order.fechaCreacion) }}</p>
       </template>
     </Card>
   </TransitionGroup>

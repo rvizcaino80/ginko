@@ -85,26 +85,26 @@ function formatDate(iso: string): string {
         <StatusBadge size="text-2xl" :estado="store.currentOrder.estado" />
       </div>
 
-      <div class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
+      <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-800">
         <div class="flex justify-between py-4">
-          <span class="text-gray-500 dark:text-gray-400">Proveedor</span>
+          <span class="text-slate-500 dark:text-slate-400">Proveedor</span>
           <span class="font-medium text-right">{{ store.currentOrder.proveedor }}</span>
         </div>
         <div class="flex justify-between py-4">
-          <span class="text-gray-500 dark:text-gray-400">Monto</span>
+          <span class="text-slate-500 dark:text-slate-400">Monto</span>
           <span class="font-mono font-medium">{{ formatCOP(store.currentOrder.monto) }}</span>
         </div>
         <div class="flex justify-between py-4">
-          <span class="text-gray-500 dark:text-gray-400">Concepto</span>
+          <span class="text-slate-500 dark:text-slate-400">Concepto</span>
           <span class="text-right max-w-[60%]">{{ store.currentOrder.concepto }}</span>
         </div>
         <div class="flex justify-between py-4">
-          <span class="text-gray-500 dark:text-gray-400">Fecha de creación</span>
+          <span class="text-slate-500 dark:text-slate-400">Fecha de creación</span>
           <span class="text-right">{{ formatDate(store.currentOrder.fechaCreacion) }}</span>
         </div>
       </div>
 
-      <div v-if="allowedTransitions().length > 0" class="pt-4 dark:border-gray-800">
+      <div v-if="allowedTransitions().length > 0" class="pt-4 dark:border-slate-800">
         <div class="flex items-center gap-2 mb-3">
           <Icon :icon="'mi:switch'"></Icon>
           <p class="font-medium">Cambiar estado</p>

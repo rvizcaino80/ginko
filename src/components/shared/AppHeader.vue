@@ -9,7 +9,7 @@ const { isDark, toggle } = useDarkMode()
 </script>
 
 <template>
-  <header class="flex items-center justify-between h-18 border-b border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 p-6">
+  <header class="flex items-center justify-between h-18 border-b border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
     <button
       class="flex items-center gap-2 font-semibold tracking-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
       @click="router.push('/')"

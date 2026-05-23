@@ -22,7 +22,7 @@ const emit = defineEmits<{ confirm: []; cancel: [] }>()
     @update:visible="(val: boolean) => { if (!val) emit('cancel') }"
     class="w-full max-w-sm"
   >
-    <p class="mb-6 text-gray-600 dark:text-gray-400">{{ message }}</p>
+    <p class="mb-6 text-slate-600 dark:text-slate-400">{{ message }}</p>
     <template #footer>
       <div class="flex justify-end gap-3">
         <Button

@@ -50,11 +50,10 @@ useKeyboardShortcuts({
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold">Órdenes de pago</h1>
-      <span class="text-sm text-gray-400 dark:text-gray-500 hidden sm:inline">
-        <kbd class="px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-600 text-xs">N</kbd>
+      <span class="text-sm text-slate-400 dark:text-slate-500 hidden sm:inline">
+        <kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">N</kbd>
         {' '}nueva ·{' '}
-        <kbd class="px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-600 text-xs">/</kbd>
+        <kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">/</kbd>
         {' '}buscar
       </span>
     </div>
