@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
 import { useOrderStore } from '@/stores/orderStore'
 import type { AiAction } from '@/composables/useAi'
+import { marked } from 'marked'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import ScrollPanel from 'primevue/scrollpanel'
@@ -14,6 +15,13 @@ const input = ref('')
 const scrollRef = ref<HTMLDivElement>()
 const store = useOrderStore()
 const { messages, thinking, chat } = useAi()
+
+const rendered = computed(() =>
+  messages.value.map((m) => ({
+    role: m.role,
+    html: marked.parse(m.content, { breaks: true }) as string,
+  })),
+)
 
 function executeAction(action: AiAction) {
   switch (action.type) {
@@ -62,21 +70,20 @@ async function handleSend() {
           <p class="text-sm mt-1">Ej: "Filtra las aprobadas"</p>
         </div>
         <div
-          v-for="(msg, i) in messages"
+          v-for="(msg, i) in rendered"
           :key="i"
           class="flex"
           :class="msg.role === 'user' ? 'justify-end' : 'justify-start'"
         >
           <div
-            class="rounded-xl px-4 py-3 max-w-[85%]"
+            class="rounded-xl px-4 py-3 max-w-[85%] overflow-hidden [&_strong]:font-semibold [&_p]:my-1 [&_ul]:my-1 [&_li]:ml-4"
             :class="
               msg.role === 'user'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
             "
-          >
-            {{ msg.content }}
-          </div>
+            v-html="msg.html"
+          />
         </div>
         <div v-if="thinking" class="flex justify-start">
           <div class="rounded-xl px-4 py-3 bg-gray-100 dark:bg-gray-800">

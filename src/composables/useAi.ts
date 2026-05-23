@@ -41,34 +41,41 @@ function buildContextPrompt(orders: Order[]): string {
     `Actualmente hay ${total} órdenes de pago cargadas en la aplicación.\n\n` +
     `Resumen por estado:\n${statusSummary}\n\n` +
     `Órdenes disponibles:\n${topIds}\n\n` +
-    `PUEDES REALIZAR ACCIONES EN LA APLICACIÓN respondiendo con JSON en este formato:\n` +
-    `{"message": "texto para el usuario", "action": {"type": "navigate", "route": "/orders/ORD-0001"}}\n` +
+    `PUEDES REALIZAR ACCIONES EN LA APLICACIÓN. Para eso responde ÚNICAMENTE con un JSON ` +
+    `válido en este formato, SIN texto adicional fuera del JSON:\n` +
+    `{"message": "texto", "action": {"type": "navigate", "route": "/orders/ORD-0001"}}\n` +
     `{"message": "texto", "action": {"type": "filter", "value": "APROBADA"}}\n` +
-    `{"message": "texto", "action": {"type": "search", "value": "nombre proveedor"}}\n\n` +
-    `Tipos de acción disponibles:\n` +
-    `- navigate: Navega a una ruta. Usa "/orders/ID" para detalle, "/orders/new" para crear.\n` +
-    `- filter: Filtra por estado. Valores: BORRADOR, APROBADA, RECHAZADA, PAGADA.\n` +
-    `- search: Busca por nombre de proveedor.\n\n` +
-    `Si el usuario pide ver/listar/mostrar una orden o conjunto de órdenes, USA UNA ACCIÓN. ` +
-    `Si solo responde una pregunta, devuelve action: null.\n\n` +
-    `Siempre usa el ID exacto de la orden (ej. "ORD-0001").\n` +
+    `{"message": "texto", "action": {"type": "search", "value": "nombre"}}\n` +
+    `{"message": "texto", "action": null}\n\n` +
+    `Tipos de acción:\n` +
+    `- navigate: Navega a una ruta ("/orders/ID", "/orders/new", "/").\n` +
+    `- filter: Filtra por estado (BORRADOR, APROBADA, RECHAZADA, PAGADA).\n` +
+    `- search: Busca por proveedor.\n\n` +
+    `Si el usuario pide ver/listar/mostrar una orden o conjunto, USA navigate/filter/search. ` +
+    `Si solo responde una pregunta, usa action: null.\n` +
+    `Puedes usar formato markdown en el mensaje (**negrita**, listas, etc.).\n` +
+    `Siempre usa el ID exacto (ej. "ORD-0001").\n` +
     `Responde SIEMPRE en español.`
   )
 }
 
 function parseResponse(text: string): ChatResult {
-  try {
-    const parsed = JSON.parse(text)
-    if (parsed && typeof parsed === 'object' && parsed.action) {
+  const jsonMatch = text.match(/\{[\s\S]*?"action"[\s\S]*?\}/)
+  if (jsonMatch) {
+    try {
+      const parsed = JSON.parse(jsonMatch[0])
+      const prefix = text.slice(0, jsonMatch.index!).trim()
+      const msg = parsed.message || ''
+      const message = prefix ? `${prefix}\n\n${msg}` : msg
       return {
-        message: parsed.message || '',
-        action: parsed.action as AiAction,
+        message: message || text,
+        action: (parsed.action as AiAction) || null,
       }
+    } catch {
+      // fall through
     }
-    return { message: text, action: null }
-  } catch {
-    return { message: text, action: null }
   }
+  return { message: text, action: null }
 }
 
 async function callApi(messages: { role: string; content: string }[]) {
