@@ -27,7 +27,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           @click="router.push('/orders/new')"
         >
           <template #icon>
-            <Icon icon="mdi:plus" class="text-lg" />
+            <Icon icon="mdi:plus" class="w-10 h-10" />
           </template>
         </Button>
         <Button
@@ -38,7 +38,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           @click="toggle"
         >
           <template #icon>
-            <Icon :icon="isDark ? 'mdi:weather-sunny' : 'mdi:weather-night'" class="text-lg" />
+            <Icon :icon="isDark ? 'mdi:weather-sunny' : 'mdi:weather-night'" class="w-10 h-10" />
           </template>
         </Button>
         <Button
@@ -50,7 +50,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           @click="toggleAiPanel"
         >
           <template #icon>
-            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" class="text-lg" />
+            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" class="w-10 h-10" />
           </template>
         </Button>
       </nav>
