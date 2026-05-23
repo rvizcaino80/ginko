@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
@@ -15,6 +15,10 @@ const input = ref('')
 const scrollRef = ref<HTMLDivElement>()
 const store = useOrderStore()
 const { messages, thinking, chat } = useAi()
+
+onMounted(() => {
+  store.loadAllOrders()
+})
 
 const rendered = computed(() =>
   messages.value.map((m) => ({
@@ -41,7 +45,7 @@ async function handleSend() {
   if (!input.value.trim() || thinking.value) return
   const q = input.value.trim()
   input.value = ''
-  const result = await chat(q, store.orders)
+  const result = await chat(q, store.allOrders)
   if (result.action) {
     executeAction(result.action)
   }
