@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useOrderStore } from '@/stores/orderStore'
 import { STATUS_TRANSITIONS, STATUS_LABELS, STATUS_SEVERITIES } from '@/types/order'
 import type { OrderStatus } from '@/types/order'
+import Button from 'primevue/button'
 import Tag from 'primevue/tag'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 import LoadingState from '@/components/shared/LoadingState.vue'
@@ -80,34 +81,34 @@ function formatDate(iso: string): string {
     <div v-else-if="store.currentOrder" class="flex flex-col gap-6">
       <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold">{{ store.currentOrder.id }}</h1>
-        <StatusBadge :estado="store.currentOrder.estado" />
+        <StatusBadge size="text-xl" :estado="store.currentOrder.estado" />
       </div>
 
-      <div class="flex flex-col gap-4">
-        <div class="flex justify-between py-3 border-b border-gray-200 dark:border-gray-800">
+      <div class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
+        <div class="flex justify-between py-4">
           <span class="text-gray-500 dark:text-gray-400">Proveedor</span>
           <span class="font-medium text-right">{{ store.currentOrder.proveedor }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-200 dark:border-gray-800">
+        <div class="flex justify-between py-4">
           <span class="text-gray-500 dark:text-gray-400">Monto</span>
           <span class="font-mono font-medium">{{ formatCOP(store.currentOrder.monto) }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-200 dark:border-gray-800">
+        <div class="flex justify-between py-4">
           <span class="text-gray-500 dark:text-gray-400">Concepto</span>
           <span class="text-right max-w-[60%]">{{ store.currentOrder.concepto }}</span>
         </div>
-        <div class="flex justify-between py-3 border-b border-gray-200 dark:border-gray-800">
+        <div class="flex justify-between py-4">
           <span class="text-gray-500 dark:text-gray-400">Fecha de creación</span>
           <span class="text-right">{{ formatDate(store.currentOrder.fechaCreacion) }}</span>
         </div>
-        <div class="flex justify-between py-3">
-          <span class="text-gray-500 dark:text-gray-400">Estado</span>
-          <StatusBadge :estado="store.currentOrder.estado" />
-        </div>
       </div>
 
-      <div v-if="allowedTransitions().length > 0" class="pt-4 border-t border-gray-200 dark:border-gray-800">
-        <p class="font-medium mb-3">Cambiar estado</p>
+      <div v-if="allowedTransitions().length > 0" class="pt-4 dark:border-gray-800">
+        <div class="flex items-center gap-2 mb-3">
+          <Icon :icon="'mi:switch'"></Icon>
+          <p class="font-medium">Cambiar estado</p>
+        </div>
+
         <div class="flex flex-wrap gap-2">
           <button
             v-for="next in allowedTransitions()"
