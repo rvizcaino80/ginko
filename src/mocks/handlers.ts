@@ -12,13 +12,23 @@ const PROVIDERS = [
   'Recursos Humanos Integrales', 'Gestión Documental SAS',
 ]
 
+let seedRandom = 42
+function seeded(): number {
+  seedRandom = (seedRandom * 16807) % 2147483647
+  return (seedRandom - 1) / 2147483646
+}
+
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(seeded() * arr.length)]
+}
+
 function randomAmount(): number {
-  return Math.floor(Math.random() * 500_000_000) + 50_000
+  return Math.floor(seeded() * 500_000_000) + 50_000
 }
 
 function randomDate(): string {
   const d = new Date()
-  d.setDate(d.getDate() - Math.floor(Math.random() * 90))
+  d.setDate(d.getDate() - Math.floor(seeded() * 90))
   return d.toISOString()
 }
 
@@ -26,11 +36,11 @@ const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio']
 
 const seed: Order[] = Array.from({ length: 53 }, (_, i) => ({
   id: `ORD-${String(i + 1).padStart(4, '0')}`,
-  proveedor: PROVIDERS[Math.floor(Math.random() * PROVIDERS.length)],
+  proveedor: pick(PROVIDERS),
   monto: randomAmount(),
-  concepto: `Pago de servicios profesionales correspondientes al mes de ${MONTHS[Math.floor(Math.random() * MONTHS.length)]} de 2026`,
+  concepto: `Pago de servicios profesionales correspondientes al mes de ${pick(MONTHS)} de 2026`,
   fechaCreacion: randomDate(),
-  estado: STATUSES[Math.floor(Math.random() * STATUSES.length)],
+  estado: pick(STATUSES),
 }))
 
 let orders = [...seed]
