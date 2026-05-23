@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { Icon } from '@iconify/vue'
 import { useOrderStore } from '@/stores/orderStore'
 import { STATUS_TRANSITIONS, STATUS_LABELS, STATUS_SEVERITIES } from '@/types/order'
 import type { OrderStatus } from '@/types/order'
@@ -81,7 +82,7 @@ function formatDate(iso: string): string {
     <div v-else-if="store.currentOrder" class="flex flex-col gap-6">
       <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold">{{ store.currentOrder.id }}</h1>
-        <StatusBadge size="text-xl" :estado="store.currentOrder.estado" />
+        <StatusBadge size="text-2xl" :estado="store.currentOrder.estado" />
       </div>
 
       <div class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
