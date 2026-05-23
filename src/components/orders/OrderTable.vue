@@ -33,7 +33,10 @@ function formatDate(iso: string): string {
     >
       <Column field="id" header="ID" sortable style="min-width: 8rem" />
       <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
-      <Column field="monto" header="Monto" sortable :headerStyle="{ textAlign: 'right' }" style="min-width: 10rem">
+      <Column field="monto" sortable style="min-width: 10rem" :headerStyle="{ textAlign: 'right' }">
+        <template #header>
+          Monto
+        </template>
         <template #body="{ data }">
           <div class="text-right font-mono">{{ formatCOP(data.monto) }}</div>
         </template>
