@@ -32,13 +32,39 @@ function randomDate(): string {
   return d.toISOString()
 }
 
-const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio']
+const CONCEPTOS = [
+  'Honorarios consultoría estratégica abril 2026',
+  'Mantenimiento preventivo equipos de cómputo',
+  'Suministro de materiales de oficina Q1',
+  'Servicio de vigilancia mensual sede principal',
+  'Desarrollo módulo de pagos plataforma web',
+  'Campaña publicidad digital redes sociales',
+  'Licencias software antivirus corporativo 2026',
+  'Transporte de mercancía ruta Bogotá-Medellín',
+  'Adecuación locativa piso 5 oficinas',
+  'Servicio de limpieza especializada mensual',
+  'Capacitación equipo ventas atención cliente',
+  'Actualización sistema facturación electrónica',
+  'Seguro de responsabilidad civil anual',
+  'Estudio de mercado nuevo producto financiero',
+  'Reparación planta eléctrica sede administrativa',
+  'Hosting y dominio sitio web corporativo',
+  'Auditoría externa estados financieros 2025',
+  'Dotación uniformes personal operativo',
+  'Arriendo bodega centro logístico',
+  'Fumigación y control de plagas trimestral',
+  'Soporte técnico infraestructura de red',
+  'Diseño empaques nueva línea productos',
+  'Análisis de riesgos sistema de seguridad',
+  'Consultoría legal cumplimiento normativo',
+  'Implementación firma electrónica documentos',
+]
 
 const seed: Order[] = Array.from({ length: 53 }, (_, i) => ({
   id: `ORD-${String(i + 1).padStart(4, '0')}`,
   proveedor: pick(PROVIDERS),
   monto: randomAmount(),
-  concepto: `Pago de servicios profesionales correspondientes al mes de ${pick(MONTHS)} de 2026`,
+  concepto: pick(CONCEPTOS),
   fechaCreacion: randomDate(),
   estado: pick(STATUSES),
 }))

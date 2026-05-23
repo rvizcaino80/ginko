@@ -31,13 +31,13 @@ function formatDate(iso: string): string {
       striped-rows
       selection-mode="single"
       @row-click="(e: { data: Order }) => emit('select', e.data.id)"
-      class="cursor-pointer"
+      class="cursor-pointer text-sm"
     >
       <Column field="id" header="ID" sortable style="min-width: 8rem" />
       <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
       <Column field="concepto" header="Concepto" sortable style="min-width: 16rem">
         <template #body="{ data }">
-          <span class="truncate block max-w-[200px]">{{ data.concepto }}</span>
+          {{ data.concepto }}
         </template>
       </Column>
       <Column field="fechaCreacion" header="Fecha" sortable style="min-width: 10rem">
