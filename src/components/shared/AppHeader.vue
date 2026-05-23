@@ -38,23 +38,27 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
         </template>
       </Button>
-      <Button
-        severity="secondary"
-        variant="outlined"
-        class="hidden xl:flex p-2"
-        :style="{
-          transform: showAiPanel ? 'translateX(80px)' : 'translateX(0)',
-          opacity: showAiPanel ? 0 : 1,
-          pointerEvents: showAiPanel ? 'none' : 'auto',
-          transition: 'all 500ms ease-in-out',
-        }"
-        :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
-        @click="toggleAiPanel"
+      <div
+        class="hidden xl:flex overflow-hidden transition-all duration-500 ease-in-out"
+        :style="{ maxWidth: showAiPanel ? '0' : '48px', opacity: showAiPanel ? 0 : 1 }"
       >
-        <template #icon>
-          <Icon icon="mdi:sparkles" class="w-6 h-6" />
-        </template>
-      </Button>
+        <Button
+          severity="secondary"
+          variant="outlined"
+          class="flex p-2"
+          :style="{
+            transform: showAiPanel ? 'translateX(80px)' : 'translateX(0)',
+            opacity: showAiPanel ? 0 : 1,
+            transition: 'all 500ms ease-in-out',
+          }"
+          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
+          @click="toggleAiPanel"
+        >
+          <template #icon>
+            <Icon icon="mdi:sparkles" class="w-6 h-6" />
+          </template>
+        </Button>
+      </div>
     </nav>
   </header>
 </template>
