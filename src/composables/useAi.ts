@@ -94,14 +94,18 @@ function extractJsonBlock(text: string): string | null {
   return null
 }
 
+function isActionResponse(val: unknown): val is { message?: string; action: AiAction | null } {
+  return typeof val === 'object' && val !== null && ('action' in val || 'message' in val)
+}
+
 function parseResponse(text: string): ChatResult {
   const trimmed = text.trim()
   try {
     const parsed = JSON.parse(trimmed)
-    if (parsed && typeof parsed === 'object' && parsed.action) {
+    if (isActionResponse(parsed)) {
       return {
         message: parsed.message || '',
-        action: parsed.action as AiAction,
+        action: (parsed.action as AiAction) ?? null,
       }
     }
   } catch {}
@@ -110,12 +114,12 @@ function parseResponse(text: string): ChatResult {
   if (block) {
     try {
       const parsed = JSON.parse(block)
-      if (parsed && parsed.action) {
+      if (isActionResponse(parsed)) {
         const prefix = text.slice(0, text.indexOf(block)).trim()
         const msg = parsed.message || ''
         return {
           message: prefix ? `${prefix}\n\n${msg}` : msg,
-          action: parsed.action as AiAction,
+          action: (parsed.action as AiAction) ?? null,
         }
       }
     } catch {}
