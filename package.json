@@ -1,0 +1,36 @@
+{
+  "name": "ginko-payments",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "pinia": "^3.0.2",
+    "vue": "^3.5.34",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.6",
+    "@types/node": "^24.12.3",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.9.1",
+    "jsdom": "^26.1.0",
+    "msw": "^2.7.6",
+    "tailwindcss": "^4.1.6",
+    "typescript": "~6.0.2",
+    "vite": "^6.4.2",
+    "vitest": "^3.1.6",
+    "vue-tsc": "^3.2.8"
+  },
+  "msw": {
+    "workerDirectory": ["public"]
+  }
+}
