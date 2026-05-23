@@ -43,10 +43,12 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
           @click="toggleAiPanel"
         >
-          <Icon
-            :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'"
-            class="text-lg"
-          />
+          <template #icon>
+            <Icon
+              :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'"
+              class="text-sm"
+            />
+          </template>
         </Button>
       </nav>
     </div>
