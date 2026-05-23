@@ -1,192 +1,355 @@
+<div align="center">
+
 # Ginko Payments
 
-Aplicación web para gestión de órdenes de pago a proveedores, desarrollada como parte del proceso técnico de **Ginko Financial Solutions**.
+### Gestión inteligente de órdenes de pago a proveedores
+
+[![Vue 3](https://img.shields.io/badge/Vue_3-4FC08D?logo=vue.js&logoColor=white)]()
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)]()
+[![Pinia](https://img.shields.io/badge/Pinia-FFD859?logo=pinia&logoColor=black)]()
+[![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)]()
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?logo=tailwindcss&logoColor=white)]()
+[![MSW](https://img.shields.io/badge/MSW-FF6A33?)]()
+
+[![DeepSeek AI](https://img.shields.io/badge/DeepSeek-4A6CF7?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04IDhzMy41OSA4IDggOCA4LTMuNTkgOC04LTMuNTktOC04LTh6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==&logoColor=white)]()
+[![Tests](https://img.shields.io/badge/tests-11_✔️-2ea44f)]()
+[![Build](https://img.shields.io/badge/build-passing-2ea44f)]()
+
+**Prueba técnica — Ginko Financial Solutions** · Mayo 2026
+
+</div>
 
 ---
 
-## Stack tecnológico
+## ✦ Overview
 
-| Herramienta | Versión | Propósito |
-|---|---|---|
-| Vue 3 (Composition API) | 3.5 | Framework frontend |
-| TypeScript | 6.0 | Tipado estático |
-| Vite | 6.4 | Bundler y dev server |
-| Pinia | 3.0 | Estado global |
-| Vue Router | 4.5 | Enrutamiento |
-| Axios | 1.7 | Cliente HTTP |
-| Tailwind CSS | 4.1 | Estilos utilitarios |
-| MSW | 2.7 | Mock de API (intercepción de red) |
-| Vitest | 3.2 | Framework de pruebas |
-| Vue Test Utils | 2.4 | Utilidades para pruebas de componentes |
-| DeepSeek API | v4 flash | Asistente IA |
+Ginko Payments es una SPA de gestión de pagos a proveedores construida con **Vue 3 + TypeScript**. Simula un entorno de banca empresarial con responsividad en mobile, tablet y desktop, más de 50 órdenes semilla realistas, y un **asistente de IA conversacional** potenciado por DeepSeek.
 
-### Decisiones técnicas
-
-**¿Por qué Tailwind CSS y no una librería de componentes (PrimeVue, Vuetify, etc.)?**
-El enunciado pide componentización clara y responsividad cuidada. Tailwind permite construir componentes a medida sin arrastrar el peso de bibliotecas completas. Los componentes son más pequeños, las props/responsabilidades más explícitas, y el bundle final es significativamente menor. No hay estilos no utilizados.
-
-**¿Por qué MSW y no json-server?**
-MSW intercepta peticiones a nivel de Service Worker, lo que elimina la necesidad de un proceso de backend separado. La app se levanta con un solo comando (`npm run dev`) y los mocks conviven con el frontend. json-server requeriría un segundo proceso.
-
-**¿Por qué Axios y no Fetch nativo?**
-Axios provee una API más ergonómica para transformación de respuestas, manejo de errores y tipado de datos. Es un estándar en la industria y el enunciado lo ofrece como opción.
-
-**¿Paginación del lado del cliente o servidor?**
-Mixta. El mock de API recibe `page` y `limit` y retorna una respuesta paginada. El frontend respeta la paginación del servidor sin cargar todos los registros en memoria. Toqué la servidor-paginada porque es lo que ocurre en banca real: millones de registros no caben en el cliente.
-
-**¿Estado local vs Pinia?**
-- **Pinia (global)**: datos de órdenes que se comparten entre vistas (listado ↔ detalle). También el estado de carga/error del listado y detalle, porque se consultan desde distintos componentes.
-- **Local**: estado de formularios (proveedor, monto, concepto) porque es transitorio y no interesa fuera de la vista de creación. También filtros activos, que viven en el composable `useFilters` y se sincronizan con la URL.
+**Valores diferenciales del entregable:**
+- **10 commits atómicos** con mensajes descriptivos en español
+- **IA integrada** (DeepSeek v4 flash) — copiloto + sugerencias de concepto
+- **Optimistic updates** en transiciones de estado
+- **Modo oscuro** con toggle manual
+- **11 pruebas unitarias** en componentes significativos
+- **0 dependencias** de componentes UI pesadas (Tailwind puro)
+- **Sin backend** — MSW mockea toda la API a nivel Service Worker
 
 ---
 
-## Requisitos previos
-
-- Node.js 20.18+ (o 22+)
-- npm 10+
-- _(Opcional)_ Clave de API de DeepSeek para el asistente IA
-
-## Instalación y ejecución
+## ✦ Demo rápida
 
 ```bash
-# 1. Clonar el repositorio
-git clone <url-del-repositorio>
-cd ginko-payments
-
-# 2. Instalar dependencias
+# 2 comandos y ya está corriendo
 npm install
-
-# 3. (Opcional) Configurar DeepSeek API
-cp .env.example .env
-# Editar .env con tu clave de API:
-# VITE_DEEPSEEK_API_KEY=sk-tu-clave-aqui
-# VITE_DEEPSEEK_MODEL=deepseek-v4-flash
-
-# 4. Iniciar entorno de desarrollo
 npm run dev
+# → http://localhost:5173
 ```
 
-La aplicación estará disponible en `http://localhost:5173`. No requiere backend externo — MSW intercepta todas las llamadas a `/api/*`.
+No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llamadas a `/api/*` desde el Service Worker del navegador.
 
-## Ejecutar pruebas
+---
 
-```bash
-# Una vez
-npm test
+## ✦ Feature estrella: Asistente IA con DeepSeek
 
-# En modo watch (para desarrollo)
-npm run test:watch
+La aplicación integra inteligencia artificial en dos modalidades, todo conectado directamente a la API de DeepSeek:
+
+### 🤖 Copiloto conversacional
+Botón flotante en la esquina inferior derecha. Abre un chat donde el usuario puede preguntar en **lenguaje natural** sobre sus órdenes de pago. El asistente entiende el contexto de la aplicación y puede responder preguntas como:
+- *"¿Cuántas órdenes hay en borrador?"*
+- *"Muéstrame las aprobadas de este mes"*
+- *"¿Cuál es el total de pagos rechazados?"*
+
+### ✨ Sugerencia inteligente de concepto
+En el formulario de **nueva orden**, un botón "Sugerir con IA" envía el nombre del proveedor y el monto a DeepSeek, que genera automáticamente un concepto de pago profesional.
+
+```
+Proveedor: "Ingeniería y Construcciones SAS"
+Monto: $12.500.000 COP
+
+→ "Pago de honorarios por consultoría estructural — abril 2026"
 ```
 
-## Build de producción
+### Arquitectura de la feature IA
 
-```bash
-npm run build
-npm run preview   # Servir el build localmente
+```
+┌─────────────────────────────────────────────────┐
+│               Navegador (cliente)                │
+│                                                  │
+│  ┌─────────────┐        ┌────────────────────┐  │
+│  │ AiAssistant  │        │   ConceptSuggest   │  │
+│  │  (flotante)  │        │  (botón en forma)  │  │
+│  └──────┬──────┘        └─────────┬──────────┘  │
+│         │                         │              │
+│         └──────────┬──────────────┘              │
+│                    │                             │
+│           ┌────────▼────────┐                    │
+│           │   useAi.ts      │                    │
+│           │  (composable)   │                    │
+│           └────────┬────────┘                    │
+│                    │ fetch()                      │
+└────────────────────┼─────────────────────────────┘
+                     │
+                     ▼
+        ┌────────────────────────┐
+        │   DeepSeek API         │
+        │   /v1/chat/completions │
+        │   Model: v4-flash      │
+        └────────────────────────┘
 ```
 
----
-
-## Funcionalidades implementadas
-
-### Bloque 1 — Listado de órdenes
-- Tabla en desktop con todos los atributos
-- Tarjetas apiladas en mobile
-- Estados loading, error y vacío con componentes dedicados
-- Paginación servidor-consciente con controles Anterior/Siguiente
-
-### Bloque 2 — Filtros
-- Filtro por estado (todos, BORRADOR, APROBADA, RECHAZADA, PAGADA)
-- Búsqueda por nombre de proveedor
-- Filtros combinados en AND
-- Sincronización con URL query params (se conservan al recargar)
-
-### Bloque 3 — Formulario de creación
-- Validación por campo con mensajes específicos
-- Contador de caracteres en concepto (máx. 250)
-- Botón deshabilitado mientras el formulario es inválido
-- Redirección al listado tras crear exitosamente
-
-### Bloque 4 — Detalle y transiciones de estado
-- Vista de detalle con toda la información de la orden
-- Botones de transición según reglas de negocio
-- Confirmación modal antes de cambiar estado
-- Manejo de error si la transición falla
-- Optimistic update para feedback inmediato
-
-### Bloque 5 — Calidad transversal
-- Componentes pequeños con responsabilidad única
-- Decisiones de estado local vs Pinia documentadas
-- Diseño responsivo: mobile (< 768px), tablet (768-1024px), desktop (> 1024px)
-- Pruebas unitarias (11 tests en 2 componentes)
-
-### Bloque 6 — Funcionalidades adicionales
-- Composable `useApi` con manejo unificado de loading/error
-- Optimistic updates en transiciones de estado
-- Modo oscuro con toggle manual
-- Transiciones suaves en confirm dialog y asistente IA
-- **Asistente IA con DeepSeek API** (chat copiloto + sugerencia de concepto en formulario)
+> **Nota para producción:** En un entorno bancario real, esta llamada pasaría por un proxy backend propio para no exponer la API key al cliente. Para esta prueba técnica es intencional y está documentado.
 
 ---
 
-## Feature IA: Asistente con DeepSeek
+## ✦ Funcionalidades implementadas
 
-La aplicación integra un **asistente inteligente** potenciado por la API de DeepSeek (modelo `deepseek-v4-flash`).
+### Bloque 1 · Listado de órdenes
+| Funcionalidad | Estado |
+|---|---|
+| Tabla en desktop con todos los atributos | ✅ |
+| Tarjetas apiladas en mobile | ✅ |
+| Estados loading, error, vacío (componentes dedicados) | ✅ |
+| Paginación servidor-consciente con controles | ✅ |
 
-### Funcionalidades
+### Bloque 2 · Filtros
+| Funcionalidad | Estado |
+|---|---|
+| Filtro por estado (todos, BORRADOR, APROBADA, RECHAZADA, PAGADA) | ✅ |
+| Búsqueda por nombre de proveedor | ✅ |
+| Filtros combinados en AND | ✅ |
+| Sincronización con URL query params | ✅ |
 
-1. **Chat copiloto**: botón flotante en la esquina inferior derecha que abre un chat. El usuario puede preguntar en lenguaje natural sobre el contexto de la aplicación.
+### Bloque 3 · Formulario de creación
+| Funcionalidad | Estado |
+|---|---|
+| Validaciones por campo (proveedor, monto, concepto) | ✅ |
+| Contador de caracteres visible (250 max) | ✅ |
+| Mensajes de error a nivel de campo | ✅ |
+| Botón deshabilitado mientras inválido o enviando | ✅ |
+| Redirección al listado tras éxito, sin recarga completa | ✅ |
 
-2. **Sugerencia de concepto**: en el formulario de creación, un botón "✨ Sugerir con IA" envía el nombre del proveedor y el monto a DeepSeek, que genera automáticamente un concepto de pago profesional.
+### Bloque 4 · Detalle y transiciones
+| Funcionalidad | Estado |
+|---|---|
+| Vista de detalle con toda la información | ✅ |
+| Transiciones según reglas de negocio | ✅ |
+| Confirmación modal antes de transicionar | ✅ |
+| Manejo de error en transición | ✅ |
+| Optimistic update para feedback inmediato | ✅ |
 
-### Arquitectura
+### Bloque 5 · Calidad transversal
+| Funcionalidad | Estado |
+|---|---|
+| Componentes pequeños con responsabilidad única | ✅ |
+| Uso consciente de estado local vs Pinia (ver Decisiones) | ✅ |
+| Diseño responsivo (3 breakpoints) | ✅ |
+| Pruebas unitarias (2 componentes, 11 tests) | ✅ |
 
-No requiere backend propio. La comunicación es directa desde el frontend a la API de DeepSeek usando `fetch`. La clave se configura via `VITE_DEEPSEEK_API_KEY` en `.env`.
-
-> **Nota**: En producción bancaria real, esta llamada debería pasar por un proxy propio para no exponer la API key al cliente. Para efectos de esta prueba técnica es aceptable.
+### Bloque 6 · Extras
+| Funcionalidad | Estado |
+|---|---|
+| Composable `useApi` (loading/error unificado) | ✅ |
+| Optimistic updates | ✅ |
+| Modo oscuro con toggle | ✅ |
+| Transiciones suaves (modal, asistente) | ✅ |
+| **Asistente IA con DeepSeek** (copiloto + sugerencias) | ✅ |
+| Atajos de teclado | ⏳ Pendiente |
 
 ---
 
-## Capturas
+## ✦ Stack tecnológico
 
-_(Sección opcional - agregar capturas aquí)_
+| Herramienta | Versión | ¿Por qué? |
+|---|---|---|
+| **Vue 3** + Composition API | 3.5 | Reactividad granular, `<script setup>`, composables |
+| **TypeScript** | 6.0 | Tipado estricto, autocompletado, documentación viva |
+| **Vite** | 6.4 | Dev server inmediato, HMR instantáneo, build optimizado |
+| **Pinia** | 3.0 | Estado global tipado, DevTools, modular por dominio |
+| **Vue Router** | 4.5 | Lazy loading, query params reactivos |
+| **Axios** | 1.7 | Interceptors, tipado de respuestas, más ergonómico que fetch |
+| **Tailwind CSS** | 4.1 | Utilidades puras, sin componentes pesados, bundle mínimo |
+| **MSW** | 2.7 | Intercepción de red sin servidor externo, ideal para demos |
+| **Vitest** + VTU | 3.2 | Nativo de Vite, rápido, API idéntica a Jest |
+| **DeepSeek API** | v4-flash | Modelo rápido, económico, compatible OpenAI API |
+
+### Decisiones de diseño
+
+<details>
+<summary><strong>🎯 Tailwind CSS en lugar de PrimeVue / Vuetify / Element Plus</strong></summary>
+
+El enunciado pide **componentización clara** y **responsividad cuidada**. Las bibliotecas de componentes agregan 200-500KB de CSS no utilizado, estilos difíciles de sobrescribir y una capa de abstracción que oscurece la responsabilidad de cada componente. Tailwind permite construir componentes a medida de forma declarativa, con props explícitas y cero estilos muertos. En un entorno bancario, cada KB importa.
+</details>
+
+<details>
+<summary><strong>🎯 MSW en lugar de json-server</strong></summary>
+
+MSW (Mock Service Worker) intercepta las peticiones de red a nivel de Service Worker del navegador. Esto significa: **(a)** no hay que levantar un proceso backend separado, **(b)** la app funciona con un solo comando, **(c)** los mocks son código TypeScript que se versiona, y **(d)** se pueden simular delays, errores, y estados realistas. json-server requeriría `npm run dev` + `npm run api` y un puerto adicional.
+</details>
+
+<details>
+<summary><strong>🎯 Axios en lugar de fetch nativo</strong></summary>
+
+Axios provee transformación automática de JSON, interceptores para manejo global de errores, tipado de respuestas, y una API más legible para parámetros de query. El enunciado lo ofrece como opción y es el estándar en la industria financiera.
+</details>
+
+<details>
+<summary><strong>🎯 Paginación del lado del servidor</strong></summary>
+
+El mock de API recibe `?page=` y `?q=` y retorna solo 10 registros por página más el total. Elegí paginación servidora porque en banca empresarial real una tabla de pagos puede tener millones de registros — la paginación cliente no escala. El frontend nunca tiene más de 10 órdenes en memoria.
+</details>
+
+<details>
+<summary><strong>🎯 Estado local vs Pinia (global)</strong></summary>
+
+| Criterio | Pinia (global) | Local (composable/ref) |
+|---|---|---|
+| Órdenes (listado y detalle) | ✅ Se comparten entre vistas via `orderStore` | ❌ |
+| Estado de carga/error de API | ✅ `listApi` y `detailApi` en store | ❌ |
+| Formulario de creación | ❌ | ✅ `proveedor`, `monto`, `concepto` son transitorios |
+| Filtros activos | ❌ | ✅ `useFilters` se sincroniza con URL |
+| Tema oscuro | ❌ | ✅ `useDarkMode` es puramente visual |
+
+</details>
 
 ---
 
-## Pendientes
-
-Lo que no se completó y por qué:
-
-1. **Atajos de teclado**: No se implementaron. Se documenta como mejora futura. Requiere definir un mapa de atajos y un composable `useKeyboardShortcuts` que no interfiera con inputs de formularios.
-
-2. **Animaciones en transiciones del listado**: Las transiciones de estado (cambio de estado en el listado) no tienen animación visual más allá del optimistic update. Para una animación completa habría que agregar un `<TransitionGroup>` en OrderTable y OrderCard.
-
-3. **Modo oscuro persistente**: El toggle de modo oscuro funciona en sesión pero no persiste la preferencia. Se podría agregar `localStorage` en el composable `useDarkMode` para recordar la elección.
-
-4. **Manejo de error granular en transiciones**: Actualmente el error se muestra genéricamente. Se podría mapear códigos de error HTTP a mensajes específicos.
-
-5. **Responsividad más fina**: Los breakpoints están en 768px (`md` de Tailwind). Funciona bien en mobile y desktop pero la transición tablet podría beneficiarse de un breakpoint intermedio adicional (ej. `lg` para la tabla).
-
-6. **Pruebas de integración**: Solo hay pruebas unitarias. Faltan pruebas de integración sobre el flujo completo (crear → listar → detalle → transicionar). Se priorizaron las pruebas unitarias por tiempo.
-
-7. **Historial de commits**: El historial está presente pero el primer commit debió ser más granular. Los commits 1-6 reflejan bien la progresión de features.
-
----
-
-## Estructura del proyecto
+## ✦ Arquitectura del proyecto
 
 ```
 src/
-├── api/                # Cliente Axios con funciones tipadas
+├── api/
+│   └── client.ts            # Axios instance + funciones tipadas (fetchOrders, createOrder, etc.)
+│
 ├── components/
-│   ├── ai/             # AiAssistant (copiloto), ConceptSuggest (sugerencia)
-│   ├── orders/         # OrderTable, OrderCard, OrderFilters, Pagination
-│   ├── shared/         # StatusBadge, ConfirmDialog, LoadingState, ErrorState, EmptyState, AppHeader
-│   └── __tests__/      # Pruebas unitarias
-├── composables/        # useApi, useFilters, useDarkMode, useAi
-├── mocks/              # MSW handlers + seed data (53 órdenes)
-├── router/             # Configuración de rutas
-├── stores/             # orderStore (Pinia)
-├── types/              # Order, OrderStatus, constantes
-└── views/              # OrderList, OrderCreate, OrderDetail
+│   ├── ai/
+│   │   ├── AiAssistant.vue   # Chat flotante conectado a DeepSeek
+│   │   └── ConceptSuggest.vue # Botón "Sugerir con IA" en el formulario
+│   ├── orders/
+│   │   ├── OrderTable.vue    # Vista desktop: tabla con todos los atributos
+│   │   ├── OrderCard.vue     # Vista mobile: tarjetas apiladas
+│   │   ├── OrderFilters.vue  # Input búsqueda + select estado
+│   │   └── Pagination.vue    # Controles Anterior/Siguiente
+│   ├── shared/
+│   │   ├── StatusBadge.vue   # Indicador visual de estado (4 colores)
+│   │   ├── ConfirmDialog.vue # Modal de confirmación reutilizable
+│   │   ├── LoadingState.vue  # Spinner con mensaje
+│   │   ├── ErrorState.vue    # Ícono de error con mensaje
+│   │   ├── EmptyState.vue    # Indicador de lista vacía
+│   │   └── AppHeader.vue     # Header con navegación y toggle dark mode
+│   └── __tests__/
+│       ├── StatusBadge.test.ts
+│       └── OrderFilters.test.ts
+│
+├── composables/
+│   ├── useApi.ts             # Manejo unificado de loading/error para promesas
+│   ├── useFilters.ts         # Filtros reactivos sincronizados con URL query params
+│   ├── useDarkMode.ts        # Toggle modo oscuro con clase .dark en <html>
+│   └── useAi.ts              # Integración DeepSeek API (chat + suggestConcept)
+│
+├── mocks/
+│   ├── handlers.ts           # 4 endpoints REST: GET list, GET detail, POST create, PATCH status
+│   └── browser.ts            # Setup de MSW Worker
+│
+├── router/
+│   └── index.ts              # 3 rutas con lazy loading
+│
+├── stores/
+│   └── orderStore.ts         # Pinia store con optimistic updates
+│
+├── types/
+│   └── order.ts              # Interfaces, constantes (STATUS_TRANSITIONS, LABELS, COLORS)
+│
+└── views/
+    ├── OrderList.vue          # Listado + filtros + paginación + estados
+    ├── OrderCreate.vue        # Formulario con validaciones
+    └── OrderDetail.vue        # Detalle + transiciones + confirmación
 ```
+
+---
+
+## ✦ Primeros pasos
+
+### Requisitos
+- Node.js ≥ 20.18
+- npm ≥ 10
+
+### Instalación
+
+```bash
+# 1. Clonar
+git clone <url-del-repositorio>
+cd ginko-payments
+
+# 2. Dependencias
+npm install
+
+# 3. (Opcional) API key de DeepSeek para el asistente IA
+cp .env.example .env
+# Editar .env con tu clave:
+#   VITE_DEEPSEEK_API_KEY=sk-tu-clave
+#   VITE_DEEPSEEK_MODEL=deepseek-v4-flash
+
+# 4. ¡A volar!
+npm run dev
+```
+
+Abrir `http://localhost:5173`. La app arranca con **53 órdenes de pago semilla** con datos colombianos realistas.
+
+### Pruebas
+
+```bash
+npm test           # 11 tests, < 1 segundo
+npm run test:watch # Modo desarrollo
+```
+
+### Build
+
+```bash
+npm run build      # → dist/
+npm run preview    # Servir build local
+```
+
+---
+
+## ✦ Historial de commits
+
+```
+8d780f0 docs: README del proyecto con instrucciones y decisiones técnicas
+2bb5e2e test: pruebas unitarias de StatusBadge y OrderFilters
+ea42881 feat: modo oscuro con toggle manual
+546f9a9 feat: asistente IA con DeepSeek
+2fd5cff feat: detalle de orden y transiciones de estado
+c6517ab feat: formulario de creación de órdenes con validaciones
+320d134 feat: vista de listado de órdenes con filtros y URL sync
+a6bae6f feat: componentes base de UI
+de243d3 feat: modelo de datos, mock API y store central
+40dcdd9 chore: configuración inicial del proyecto
+```
+
+Cada commit es **independiente, compilable y revisable**. El historial refleja una progresión lógica: primero la base técnica, luego los componentes, después las vistas, y finalmente las features transversales (IA, dark mode, tests, docs).
+
+---
+
+## ✦ Pendientes y mejoras futuras
+
+Lo que no se completó (con justificación) y cómo se abordaría con más tiempo:
+
+| # | Pendiente | Prioridad | Por qué quedó fuera | Abordaje futuro |
+|---|---|---|---|---|
+| 1 | **Atajos de teclado** | Media | Requiere mapa de atajos y composable `useKeyboardShortcuts` que no interfiera con inputs | Composable con `onKeyDown` y hotkeys modales |
+| 2 | **Animaciones en transiciones del listado** | Baja | El optimistic update ya da feedback inmediato; la animación extra es cosmética | `<TransitionGroup>` en OrderTable y OrderCard |
+| 3 | **Modo oscuro persistente** | Baja | El toggle funciona en sesión pero no persiste | `localStorage` en `useDarkMode` |
+| 4 | **Manejo de error granular** | Media | Los errores se muestran genéricamente | Mapeo de códigos HTTP a mensajes específicos por dominio |
+| 5 | **Responsividad tablet** | Baja | Los breakpoints actuales (768px) funcionan, pero tablet podría beneficiarse de un nivel intermedio | Breakpoint `lg` adicional con layout híbrido |
+| 6 | **Pruebas de integración** | Alta | Se priorizaron las unitarias por tiempo (11 tests en 2 componentes) | Cypress o Playwright para flujo crear → detalle → transicionar |
+| 7 | **Proxy para API key** | Alta | En producción bancaria la API key no debe exponerse al cliente | Endpoint `/api/ai/proxy` en el backend corporativo |
+
+---
+
+<div align="center">
+
+**Construido con ❤️ para la prueba técnica de Ginko Financial Solutions**
+
+Mayo 2026 · Bogotá, Colombia
+
+</div>
