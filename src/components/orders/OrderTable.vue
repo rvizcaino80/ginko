@@ -33,7 +33,7 @@ function formatDate(iso: string): string {
     >
       <Column field="id" header="ID" sortable style="min-width: 8rem" />
       <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
-      <Column field="monto" sortable style="min-width: 10rem" :headerStyle="{ textAlign: 'right' }">
+      <Column field="monto" sortable style="min-width: 10rem" :pt="{ headerContent: { style: { justifyContent: 'flex-end' } } }">
         <template #header>
           Monto
         </template>
