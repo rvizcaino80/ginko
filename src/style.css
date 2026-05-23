@@ -16,16 +16,25 @@ body {
 }
 
 .dark {
-  --p-datatable-body-cell-background: transparent;
-  --p-datatable-body-cell-selected-border-color: var(--color-slate-900);
   --p-datatable-row-striped-background: var(--color-slate-950);
-  --p-datatable-row-background: transparent;
-  --p-datatable-header-cell-background: transparent;
   --p-datatable-border-color: var(--color-slate-800);
   --p-inputtext-background: var(--color-slate-800);
   --p-select-background: var(--color-slate-800);
   --p-textarea-background: var(--color-slate-800);
   --p-inputnumber-background: var(--color-slate-800);
+}
+
+.dark .p-datatable,
+.dark .p-datatable .p-datatable-tbody > tr,
+.dark .p-datatable .p-datatable-thead > tr > th,
+.dark .p-datatable .p-datatable-tbody > tr > td {
+  background: transparent !important;
+}
+
+.dark .p-inputtext,
+.dark .p-inputnumber,
+.dark .p-textarea {
+  background: #1e293b !important;
 }
 
 
