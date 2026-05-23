@@ -15,4 +15,10 @@ body {
   font-weight: 500 !important;
 }
 
+.dark {
+  --p-datatable-body-cell-selected-border-color: #111827;
+  --p-datatable-row-striped-background: #030712;
+  --p-datatable-border-color: #1f2937;
+}
+
 
