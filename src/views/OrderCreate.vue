@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useOrderStore } from '@/stores/orderStore'
+import ConceptSuggest from '@/components/ai/ConceptSuggest.vue'
 
 const router = useRouter()
 const store = useOrderStore()
@@ -102,6 +103,11 @@ async function submit() {
           Concepto
           <span class="text-xs text-gray-400 dark:text-gray-500">({{ conceptoCount }}/250)</span>
         </label>
+        <ConceptSuggest
+          :proveedor="proveedor"
+          :monto="monto"
+          @suggest="(t: string) => concepto = t"
+        />
         <textarea
           v-model="concepto"
           class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none"
