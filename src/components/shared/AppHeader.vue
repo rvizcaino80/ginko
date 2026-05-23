@@ -2,12 +2,10 @@
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useDarkMode } from '@/composables/useDarkMode'
-import { useUiState } from '@/composables/useUiState'
 import Button from 'primevue/button'
 
 const router = useRouter()
 const { isDark, toggle } = useDarkMode()
-const { showAiPanel, toggleAiPanel } = useUiState()
 </script>
 
 <template>
@@ -38,27 +36,6 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
         </template>
       </Button>
-      <div
-        class="hidden xl:flex overflow-hidden transition-all duration-300 ease-in-out"
-        :style="{ maxWidth: showAiPanel ? '0' : '48px', opacity: showAiPanel ? 0 : 1 }"
-      >
-        <Button
-          severity="secondary"
-          variant="outlined"
-          class="flex p-2"
-          :style="{
-            transform: showAiPanel ? 'translateX(80px)' : 'translateX(0)',
-            opacity: showAiPanel ? 0 : 1,
-            transition: 'all 300ms ease-in-out',
-          }"
-          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
-          @click="toggleAiPanel"
-        >
-          <template #icon>
-            <Icon icon="mdi:sparkles" class="w-6 h-6" />
-          </template>
-        </Button>
-      </div>
     </nav>
   </header>
 </template>

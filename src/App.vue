@@ -3,10 +3,8 @@ import { RouterView, useRouter } from 'vue-router'
 import AppHeader from '@/components/shared/AppHeader.vue'
 import AiAssistant from '@/components/ai/AiAssistant.vue'
 import { useKeyboardShortcuts } from '@/composables/useKeyboardShortcuts'
-import { useUiState } from '@/composables/useUiState'
 
 const router = useRouter()
-const { showAiPanel } = useUiState()
 
 useKeyboardShortcuts({
   n: () => router.push('/orders/new'),
@@ -27,10 +25,7 @@ useKeyboardShortcuts({
         <RouterView />
       </main>
     </div>
-    <aside
-      class="bg-gray-100 w-100 border-l border-gray-200 dark:border-gray-800 dark:bg-gray-900 transition-all duration-300"
-      :class="showAiPanel ? 'block' : 'hidden'"
-    >
+    <aside class="hidden xl:flex bg-gray-100 w-100 border-l border-gray-200 dark:border-gray-800 dark:bg-gray-900">
       <AiAssistant />
     </aside>
   </div>

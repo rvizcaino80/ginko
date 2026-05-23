@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
 import { useOrderStore } from '@/stores/orderStore'
-import { useUiState } from '@/composables/useUiState'
 import type { AiAction } from '@/composables/useAi'
 import { marked } from 'marked'
 import InputText from 'primevue/inputtext'
@@ -16,7 +15,6 @@ const input = ref('')
 const scrollRef = ref<HTMLDivElement>()
 const store = useOrderStore()
 const { messages, thinking, chat } = useAi()
-const { toggleAiPanel } = useUiState()
 
 onMounted(() => {
   store.loadAllOrders()
@@ -67,9 +65,6 @@ async function handleSend() {
         <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-2xl" />
         <span class="font-semibold">Asistente IA</span>
       </div>
-      <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer" @click="toggleAiPanel">
-        <Icon icon="mdi:close" class="text-xl" />
-      </button>
     </div>
 
     <ScrollPanel class="flex-1">
