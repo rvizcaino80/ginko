@@ -39,7 +39,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
         </template>
       </Button>
       <div
-        class="hidden xl:flex overflow-hidden transition-all duration-500 ease-in-out"
+        class="hidden xl:flex overflow-hidden transition-all duration-300 ease-in-out"
         :style="{ maxWidth: showAiPanel ? '0' : '48px', opacity: showAiPanel ? 0 : 1 }"
       >
         <Button
@@ -49,7 +49,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           :style="{
             transform: showAiPanel ? 'translateX(80px)' : 'translateX(0)',
             opacity: showAiPanel ? 0 : 1,
-            transition: 'all 500ms ease-in-out',
+            transition: 'all 300ms ease-in-out',
           }"
           :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
           @click="toggleAiPanel"

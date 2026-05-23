@@ -28,8 +28,8 @@ useKeyboardShortcuts({
       </main>
     </div>
     <aside
-      class="w-[400px] min-w-[400px] border-l border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all duration-300"
-      :class="showAiPanel ? 'xl:flex' : 'hidden'"
+      class="bg-gray-100 w-100 border-l border-gray-200 dark:border-gray-800 dark:bg-gray-900 transition-all duration-300"
+      :class="showAiPanel ? 'block' : 'hidden'"
     >
       <AiAssistant />
     </aside>

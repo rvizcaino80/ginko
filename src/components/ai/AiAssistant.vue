@@ -62,7 +62,7 @@ async function handleSend() {
 
 <template>
   <div class="flex flex-col h-full">
-    <div class="bg-stone-50 flex items-center justify-between p-6 border-b border-gray-300 dark:border-gray-800 h-18">
+    <div class="bg-gray-50 dark:bg-gray-700 flex items-center justify-between p-6 border-b border-gray-300 dark:border-gray-800 h-18">
       <div class="flex items-center gap-2">
         <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-2xl" />
         <span class="font-semibold">Asistente IA</span>
