@@ -7,8 +7,11 @@ import Tag from 'primevue/tag'
 const props = defineProps<{ estado: OrderStatus; size?: string }>()
 const severity = computed(() => STATUS_SEVERITIES[props.estado])
 const label = computed(() => STATUS_LABELS[props.estado])
+const valuePt = computed(() => ({
+  value: { class: `!${props.size ?? 'text-sm'}` },
+}))
 </script>
 
 <template>
-  <Tag :value="label" :severity="severity" :pt="{ value: { class: size ?? 'text-sm' } }" />
+  <Tag :value="label" :severity="severity" :pt="valuePt" />
 </template>
