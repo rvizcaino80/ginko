@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
 
 const props = defineProps<{
@@ -18,10 +19,11 @@ async function handleSuggest() {
 <template>
   <button
     type="button"
-    class="text-xs text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-40 disabled:no-underline cursor-pointer"
+    class="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-40 disabled:no-underline cursor-pointer"
     :disabled="!proveedor.trim() || !monto || thinking"
     @click="handleSuggest"
   >
-    {{ thinking ? 'Generando...' : '✨ Sugerir con IA' }}
+    <Icon icon="mdi:lightbulb-outline" class="text-base" />
+    {{ thinking ? 'Generando...' : 'Sugerir con IA' }}
   </button>
 </template>

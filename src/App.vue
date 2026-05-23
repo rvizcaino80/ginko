@@ -7,9 +7,13 @@ import AiAssistant from '@/components/ai/AiAssistant.vue'
 <template>
   <div class="min-h-screen flex flex-col">
     <AppHeader />
-    <main class="flex-1 container mx-auto px-4 py-6 max-w-6xl">
-      <RouterView />
-    </main>
-    <AiAssistant />
+    <div class="flex flex-1">
+      <main class="flex-1 min-w-0 p-6 overflow-auto">
+        <RouterView />
+      </main>
+      <aside class="hidden xl:flex w-[400px] min-w-[400px] border-l border-gray-200 dark:border-gray-800">
+        <AiAssistant />
+      </aside>
+    </div>
   </div>
 </template>

@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  font-weight: 600;
+}

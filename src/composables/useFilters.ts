@@ -7,7 +7,6 @@ export function useFilters() {
   const router = useRouter()
 
   const filters = ref<OrderFilters>({
-    page: Number(route.query.page) || 1,
     status: (route.query.status as string) || 'todos',
     q: (route.query.q as string) || '',
   })
@@ -19,7 +18,6 @@ export function useFilters() {
     () => {
       if (syncing.value) return
       filters.value = {
-        page: Number(route.query.page) || 1,
         status: (route.query.status as string) || 'todos',
         q: (route.query.q as string) || '',
       }
@@ -32,7 +30,6 @@ export function useFilters() {
       syncing.value = true
       router.replace({
         query: {
-          page: f.page > 1 ? String(f.page) : undefined,
           status: f.status !== 'todos' ? f.status : undefined,
           q: f.q || undefined,
         },

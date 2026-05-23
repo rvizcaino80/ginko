@@ -2,6 +2,11 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useOrderStore } from '@/stores/orderStore'
+import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
+import Textarea from 'primevue/textarea'
+import Button from 'primevue/button'
+import Message from 'primevue/message'
 import ConceptSuggest from '@/components/ai/ConceptSuggest.vue'
 
 const router = useRouter()
@@ -56,84 +61,69 @@ async function submit() {
 </script>
 
 <template>
-  <div class="max-w-lg mx-auto">
-    <h1 class="text-xl font-semibold mb-6">Nueva orden de pago</h1>
+  <div class="max-w-xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">Nueva orden de pago</h1>
 
-    <form class="space-y-5" @submit.prevent="submit">
-      <div>
-        <label class="block text-sm font-medium mb-1">Proveedor</label>
-        <input
+    <form class="flex flex-col gap-5" @submit.prevent="submit">
+      <div class="flex flex-col gap-1">
+        <label class="font-medium">Proveedor</label>
+        <InputText
           v-model="proveedor"
-          type="text"
-          class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-          :class="
-            proveedor.trim() && proveedorError
-              ? 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
-          "
           placeholder="Nombre del proveedor"
+          :invalid="proveedor.trim().length > 0 && !!proveedorError"
         />
-        <p v-if="proveedor.trim() && proveedorError" class="text-xs text-red-500 mt-1">
-          {{ proveedorError }}
-        </p>
+        <small v-if="proveedor.trim() && proveedorError" class="text-red-500">{{ proveedorError }}</small>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-1">Monto (COP)</label>
-        <input
-          v-model.number="monto"
-          type="number"
-          min="1"
-          step="1000"
-          class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-          :class="
-            monto !== null && montoError
-              ? 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
-          "
+      <div class="flex flex-col gap-1">
+        <label class="font-medium">Monto (COP)</label>
+        <InputNumber
+          v-model="monto"
+          :min="1"
+          :step="1000"
           placeholder="0"
+          class="w-full"
+          :invalid="monto !== null && !!montoError"
+          mode="currency"
+          currency="COP"
+          locale="es-CO"
         />
-        <p v-if="monto !== null && montoError" class="text-xs text-red-500 mt-1">
-          {{ montoError }}
-        </p>
+        <small v-if="monto !== null && montoError" class="text-red-500">{{ montoError }}</small>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-1">
-          Concepto
-          <span class="text-xs text-gray-400 dark:text-gray-500">({{ conceptoCount }}/250)</span>
-        </label>
-        <ConceptSuggest
-          :proveedor="proveedor"
-          :monto="monto"
-          @suggest="(t: string) => concepto = t"
-        />
-        <textarea
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center justify-between">
+          <label class="font-medium">Concepto</label>
+          <div class="flex items-center gap-3">
+            <ConceptSuggest
+              :proveedor="proveedor"
+              :monto="monto"
+              @suggest="(t: string) => concepto = t"
+            />
+            <span class="text-sm text-gray-400 dark:text-gray-500">({{ conceptoCount }}/250)</span>
+          </div>
+        </div>
+        <Textarea
           v-model="concepto"
-          class="w-full px-3 py-2 text-sm border rounded-lg bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none"
-          :class="
-            concepto.trim() && conceptoError
-              ? 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
-          "
+          :maxlength="250"
           rows="3"
-          maxlength="250"
           placeholder="Descripción del pago"
+          :invalid="concepto.trim().length > 0 && !!conceptoError"
+          auto-resize
         />
-        <p v-if="concepto.trim() && conceptoError" class="text-xs text-red-500 mt-1">
-          {{ conceptoError }}
-        </p>
+        <small v-if="concepto.trim() && conceptoError" class="text-red-500">{{ conceptoError }}</small>
       </div>
 
-      <p v-if="submitError" class="text-sm text-red-500">{{ submitError }}</p>
+      <Message v-if="submitError" severity="error" :life="5000">
+        {{ submitError }}
+      </Message>
 
-      <button
+      <Button
         type="submit"
-        class="w-full py-2.5 text-sm font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-        :disabled="!valid || submitting"
-      >
-        {{ submitting ? 'Creando...' : 'Crear orden' }}
-      </button>
+        label="Crear orden"
+        :loading="submitting"
+        :disabled="!valid"
+      />
     </form>
   </div>
 </template>

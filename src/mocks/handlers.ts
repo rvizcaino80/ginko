@@ -22,11 +22,13 @@ function randomDate(): string {
   return d.toISOString()
 }
 
+const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio']
+
 const seed: Order[] = Array.from({ length: 53 }, (_, i) => ({
   id: `ORD-${String(i + 1).padStart(4, '0')}`,
   proveedor: PROVIDERS[Math.floor(Math.random() * PROVIDERS.length)],
   monto: randomAmount(),
-  concepto: `Pago de servicios profesionales correspondientes al mes de ${['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio'][Math.floor(Math.random() * 6)]} de 2026`,
+  concepto: `Pago de servicios profesionales correspondientes al mes de ${MONTHS[Math.floor(Math.random() * MONTHS.length)]} de 2026`,
   fechaCreacion: randomDate(),
   estado: STATUSES[Math.floor(Math.random() * STATUSES.length)],
 }))
@@ -35,27 +37,22 @@ let orders = [...seed]
 
 export const handlers = [
   http.get('/api/orders', async ({ request }) => {
-    await delay(400)
+    await delay(350)
     const url = new URL(request.url)
-    const page = Number(url.searchParams.get('page')) || 1
     const status = url.searchParams.get('status') || ''
     const q = url.searchParams.get('q') || ''
-    const limit = 10
 
     let filtered = [...orders]
-    if (status && status !== 'todos') filtered = filtered.filter((o) => o.estado === status)
+    if (status && status !== 'todos') {
+      filtered = filtered.filter((o) => o.estado === status)
+    }
     if (q) {
       const term = q.toLowerCase()
       filtered = filtered.filter((o) => o.proveedor.toLowerCase().includes(term))
     }
     filtered.sort((a, b) => new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime())
 
-    const total = filtered.length
-    const totalPages = Math.max(1, Math.ceil(total / limit))
-    const start = (page - 1) * limit
-    const items = filtered.slice(start, start + limit)
-
-    return HttpResponse.json({ items, total, page, totalPages })
+    return HttpResponse.json(filtered)
   }),
 
   http.get('/api/orders/:id', async ({ params }) => {

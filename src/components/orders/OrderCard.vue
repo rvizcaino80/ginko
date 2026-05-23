@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Order } from '@/types/order'
+import Card from 'primevue/card'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 
 defineProps<{ orders: Order[] }>()
@@ -17,21 +18,23 @@ function formatDate(iso: string): string {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <div
+  <div class="flex flex-col gap-4">
+    <Card
       v-for="order in orders"
       :key="order.id"
-      class="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 cursor-pointer hover:shadow-md transition-shadow"
+      class="cursor-pointer hover:shadow-md transition-shadow"
       @click="emit('select', order.id)"
     >
-      <div class="flex items-center justify-between mb-2">
-        <span class="font-mono text-xs text-gray-500 dark:text-gray-400">{{ order.id }}</span>
-        <StatusBadge :estado="order.estado" />
-      </div>
-      <p class="font-medium text-sm mb-1">{{ order.proveedor }}</p>
-      <p class="font-mono text-sm mb-1">{{ formatCOP(order.monto) }}</p>
-      <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ order.concepto }}</p>
-      <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ formatDate(order.fechaCreacion) }}</p>
-    </div>
+      <template #content>
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-mono text-sm text-gray-500 dark:text-gray-400">{{ order.id }}</span>
+          <StatusBadge :estado="order.estado" />
+        </div>
+        <p class="font-medium mb-1">{{ order.proveedor }}</p>
+        <p class="font-mono mb-1">{{ formatCOP(order.monto) }}</p>
+        <p class="text-gray-500 dark:text-gray-400 truncate text-base">{{ order.concepto }}</p>
+        <p class="text-gray-400 dark:text-gray-500 mt-2 text-base">{{ formatDate(order.fechaCreacion) }}</p>
+      </template>
+    </Card>
   </div>
 </template>

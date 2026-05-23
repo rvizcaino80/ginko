@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Order } from '@/types/order'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 
 defineProps<{ orders: Order[] }>()
@@ -17,33 +19,38 @@ function formatDate(iso: string): string {
 </script>
 
 <template>
-  <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800">
-    <table class="w-full text-sm">
-      <thead>
-        <tr class="bg-gray-100 dark:bg-gray-900 text-left">
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">ID</th>
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">Proveedor</th>
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">Monto</th>
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">Concepto</th>
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">Fecha</th>
-          <th class="px-4 py-3 font-medium text-gray-600 dark:text-gray-400">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="order in orders"
-          :key="order.id"
-          class="border-t border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors cursor-pointer"
-          @click="emit('select', order.id)"
-        >
-          <td class="px-4 py-3 font-mono text-xs">{{ order.id }}</td>
-          <td class="px-4 py-3">{{ order.proveedor }}</td>
-          <td class="px-4 py-3 font-mono">{{ formatCOP(order.monto) }}</td>
-          <td class="px-4 py-3 max-w-xs truncate">{{ order.concepto }}</td>
-          <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ formatDate(order.fechaCreacion) }}</td>
-          <td class="px-4 py-3"><StatusBadge :estado="order.estado" /></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <DataTable
+    :value="orders"
+    :paginator="true"
+    :rows="10"
+    :rows-per-page-options="[5, 10, 20]"
+    sortable
+    striped-rows
+    selection-mode="single"
+    @row-click="(e: { data: Order }) => emit('select', e.data.id)"
+    class="cursor-pointer"
+  >
+    <Column field="id" header="ID" sortable style="min-width: 8rem" />
+    <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
+    <Column field="monto" header="Monto" sortable style="min-width: 10rem">
+      <template #body="{ data }">
+        <span class="font-mono">{{ formatCOP(data.monto) }}</span>
+      </template>
+    </Column>
+    <Column field="concepto" header="Concepto" sortable style="min-width: 16rem">
+      <template #body="{ data }">
+        <span class="truncate block max-w-[200px]">{{ data.concepto }}</span>
+      </template>
+    </Column>
+    <Column field="fechaCreacion" header="Fecha" sortable style="min-width: 10rem">
+      <template #body="{ data }">
+        {{ formatDate(data.fechaCreacion) }}
+      </template>
+    </Column>
+    <Column field="estado" header="Estado" sortable style="min-width: 8rem">
+      <template #body="{ data }">
+        <StatusBadge :estado="data.estado" />
+      </template>
+    </Column>
+  </DataTable>
 </template>

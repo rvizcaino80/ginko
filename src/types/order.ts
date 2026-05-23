@@ -9,15 +9,7 @@ export interface Order {
   estado: OrderStatus
 }
 
-export interface PaginatedResponse<T> {
-  items: T[]
-  total: number
-  page: number
-  totalPages: number
-}
-
 export interface OrderFilters {
-  page: number
   status: string
   q: string
 }
@@ -36,9 +28,9 @@ export const STATUS_LABELS: Record<OrderStatus, string> = {
   PAGADA: 'Pagada',
 }
 
-export const STATUS_COLORS: Record<OrderStatus, string> = {
-  BORRADOR: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  APROBADA: 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
-  RECHAZADA: 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300',
-  PAGADA: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+export const STATUS_SEVERITIES: Record<OrderStatus, 'warn' | 'success' | 'danger' | 'info'> = {
+  BORRADOR: 'warn',
+  APROBADA: 'success',
+  RECHAZADA: 'danger',
+  PAGADA: 'info',
 }

@@ -1,27 +1,19 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { Order, PaginatedResponse, OrderFilters } from '@/types/order'
+import type { Order, OrderFilters } from '@/types/order'
 import * as api from '@/api/client'
 import { useApi } from '@/composables/useApi'
 
 export const useOrderStore = defineStore('orders', () => {
   const orders = ref<Order[]>([])
-  const total = ref(0)
-  const totalPages = ref(0)
-  const currentPage = ref(1)
   const currentOrder = ref<Order | null>(null)
 
-  const listApi = useApi<PaginatedResponse<Order>>()
+  const listApi = useApi<Order[]>()
   const detailApi = useApi<Order>()
 
   async function loadOrders(filters: OrderFilters) {
     const result = await listApi.execute(api.fetchOrders(filters))
-    if (result) {
-      orders.value = result.items
-      total.value = result.total
-      totalPages.value = result.totalPages
-      currentPage.value = result.page
-    }
+    if (result) orders.value = result
   }
 
   async function loadOrder(id: string) {
@@ -30,11 +22,7 @@ export const useOrderStore = defineStore('orders', () => {
     if (result) currentOrder.value = result
   }
 
-  async function create(input: {
-    proveedor: string
-    monto: number
-    concepto: string
-  }) {
+  async function create(input: { proveedor: string; monto: number; concepto: string }) {
     return await api.createOrder(input)
   }
 
@@ -60,8 +48,7 @@ export const useOrderStore = defineStore('orders', () => {
   }
 
   return {
-    orders, total, totalPages, currentPage, currentOrder,
-    listApi, detailApi,
+    orders, currentOrder, listApi, detailApi,
     loadOrders, loadOrder, create, transition,
   }
 })

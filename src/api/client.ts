@@ -1,11 +1,11 @@
 import axios from 'axios'
-import type { Order, PaginatedResponse, OrderFilters, OrderStatus } from '@/types/order'
+import type { Order, OrderFilters, OrderStatus } from '@/types/order'
 
 const api = axios.create({ baseURL: '/api' })
 
-export async function fetchOrders(filters: OrderFilters): Promise<PaginatedResponse<Order>> {
+export async function fetchOrders(filters: OrderFilters): Promise<Order[]> {
   const { data } = await api.get('/orders', {
-    params: { page: filters.page, status: filters.status, q: filters.q },
+    params: { status: filters.status, q: filters.q },
   })
   return data
 }
