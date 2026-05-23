@@ -8,7 +8,7 @@ interface ChatMessage {
 }
 
 export interface AiAction {
-  type: 'navigate' | 'filter' | 'search'
+  type: 'navigate' | 'filter' | 'search' | 'sort'
   route?: string
   value?: string
 }
@@ -59,11 +59,13 @@ function buildContextPrompt(orders: Order[]): string {
     `{"message": "texto", "action": {"type": "navigate", "route": "/orders/ORD-0001"}}\n` +
     `{"message": "texto", "action": {"type": "filter", "value": "APROBADA"}}\n` +
     `{"message": "texto", "action": {"type": "search", "value": "nombre"}}\n` +
+    `{"message": "texto", "action": {"type": "sort", "value": "monto-desc"}}\n` +
     `{"message": "texto", "action": null}\n\n` +
     `Tipos de acción:\n` +
     `- navigate → "/orders/ID" para detalle, "/orders/new" para crear.\n` +
     `- filter → filtra por estado (BORRADOR, APROBADA, RECHAZADA, PAGADA).\n` +
-    `- search → busca por proveedor.\n\n` +
+    `- search → busca por proveedor.\n` +
+    `- sort → ordena. Valores: monto-desc, monto-asc, fecha-desc, fecha-asc, proveedor-asc.\n\n` +
     `REGLAS IMPORTANTES:\n` +
     `1. Cuando ejecutes filter o search, la ACCIÓN YA SE APLICÓ AUTOMÁTICAMENTE. ` +
     `No digas "aplica el filtro" ni "puedes ver el listado". Solo confirma: ` +

@@ -38,6 +38,9 @@ function executeAction(action: AiAction) {
     case 'search':
       router.push({ path: '/', query: { q: action.value } })
       break
+    case 'sort':
+      router.push({ path: '/', query: { sort: action.value } })
+      break
   }
 }
 
