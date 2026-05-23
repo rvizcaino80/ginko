@@ -19,7 +19,7 @@ const emit = defineEmits<{ confirm: []; cancel: [] }>()
     :header="title"
     modal
     closable
-    @hide="emit('cancel')"
+    @update:visible="(val: boolean) => { if (!val) emit('cancel') }"
     class="w-full max-w-sm"
   >
     <p class="mb-6 text-gray-600 dark:text-gray-400">{{ message }}</p>
