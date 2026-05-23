@@ -2,9 +2,9 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useOrderStore } from '@/stores/orderStore'
-import { STATUS_TRANSITIONS, STATUS_LABELS } from '@/types/order'
+import { STATUS_TRANSITIONS, STATUS_LABELS, STATUS_SEVERITIES } from '@/types/order'
 import type { OrderStatus } from '@/types/order'
-import Button from 'primevue/button'
+import Tag from 'primevue/tag'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 import LoadingState from '@/components/shared/LoadingState.vue'
 import ErrorState from '@/components/shared/ErrorState.vue'
@@ -109,13 +109,14 @@ function formatDate(iso: string): string {
       <div v-if="allowedTransitions().length > 0" class="pt-4 border-t border-gray-200 dark:border-gray-800">
         <p class="font-medium mb-3">Cambiar estado</p>
         <div class="flex flex-wrap gap-2">
-          <Button
+          <button
             v-for="next in allowedTransitions()"
             :key="next"
-            :label="STATUS_LABELS[next]"
-            size="small"
+            class="cursor-pointer transition-opacity hover:opacity-80"
             @click="requestTransition(next)"
-          />
+          >
+            <Tag :value="STATUS_LABELS[next]" :severity="STATUS_SEVERITIES[next]" />
+          </button>
         </div>
         <small v-if="transitionError" class="text-red-500 mt-2 block">{{ transitionError }}</small>
       </div>
