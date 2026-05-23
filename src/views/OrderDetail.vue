@@ -125,6 +125,7 @@ function formatDate(iso: string): string {
     </div>
 
     <ConfirmDialog
+      v-if="confirmOpen"
       :open="confirmOpen"
       title="Confirmar cambio de estado"
       :message="`¿Estás seguro de cambiar esta orden a «${pendingTransition ? STATUS_LABELS[pendingTransition] : ''}»?`"
