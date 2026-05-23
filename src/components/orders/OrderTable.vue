@@ -68,7 +68,7 @@ function formatDate(iso: string): string {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-:deep(.text-right .p-column-header-content) {
+:deep(.text-right .p-datatable-column-header-content) {
   justify-content: end !important;
 }
 </style>
