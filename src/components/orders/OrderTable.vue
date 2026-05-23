@@ -33,7 +33,7 @@ function formatDate(iso: string): string {
     >
       <Column field="id" header="ID" sortable style="min-width: 8rem" />
       <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
-      <Column field="monto" sortable style="min-width: 10rem" :pt="{ headerContent: { style: { justifyContent: 'flex-end' } } }">
+      <Column field="monto" sortable header-class="text-right" style="min-width: 10rem">
         <template #header>
           Monto
         </template>
@@ -67,5 +67,8 @@ function formatDate(iso: string): string {
 @keyframes fadeSlideIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+:deep(.text-right .p-column-header-content) {
+  justify-content: flex-end !important;
 }
 </style>
