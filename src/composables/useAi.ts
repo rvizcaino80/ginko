@@ -20,19 +20,32 @@ export interface ChatResult {
 
 function buildContextPrompt(orders: Order[]): string {
   const total = orders.length
+
   const byStatus: Record<string, number> = {}
+  const byProvider: Record<string, { total: number; ids: string[] }> = {}
   for (const o of orders) {
     byStatus[o.estado] = (byStatus[o.estado] || 0) + 1
+    if (!byProvider[o.proveedor]) byProvider[o.proveedor] = { total: 0, ids: [] }
+    byProvider[o.proveedor].total++
+    byProvider[o.proveedor].ids.push(o.id)
   }
+
   const statusSummary = Object.entries(STATUS_LABELS)
     .map(([k, v]) => `${v}: ${byStatus[k] || 0}`)
     .join(', ')
 
-  const top = orders.slice(0, 15)
-  const topIds = top
+  const providerSummary = Object.entries(byProvider)
+    .sort((a, b) => b[1].total - a[1].total)
+    .map(([name, info]) => {
+      const ids = info.ids.length <= 3 ? info.ids.join(', ') : info.ids.slice(0, 3).join(', ') + '...'
+      return `${name}: ${info.total} (${ids})`
+    })
+    .join('\n')
+
+  const allOrders = orders
     .map(
       (o) =>
-        `  - ${o.id} | ${o.proveedor} | $${o.monto.toLocaleString('es-CO')} | ${STATUS_LABELS[o.estado]}`,
+        `${o.id}|${o.proveedor}|$${o.monto.toLocaleString('es-CO')}|${STATUS_LABELS[o.estado]}`,
     )
     .join('\n')
 
@@ -40,7 +53,8 @@ function buildContextPrompt(orders: Order[]): string {
     `Eres un asistente financiero integrado en una app de gestión de pagos llamada Ginko. ` +
     `Actualmente hay ${total} órdenes de pago cargadas en la aplicación.\n\n` +
     `Resumen por estado:\n${statusSummary}\n\n` +
-    `Órdenes disponibles:\n${topIds}\n\n` +
+    `Resumen por proveedor:\n${providerSummary}\n\n` +
+    `Lista completa de órdenes:\n${allOrders}\n\n` +
     `PUEDES REALIZAR ACCIONES EN LA APLICACIÓN. Responde ÚNICAMENTE con JSON válido:\n` +
     `{"message": "texto", "action": {"type": "navigate", "route": "/orders/ORD-0001"}}\n` +
     `{"message": "texto", "action": {"type": "filter", "value": "APROBADA"}}\n` +
@@ -122,7 +136,7 @@ async function callApi(messages: { role: string; content: string }[]) {
       body: JSON.stringify({
         model: import.meta.env.VITE_DEEPSEEK_MODEL || 'deepseek-v4-flash',
         messages,
-        max_tokens: 800,
+        max_tokens: 1500,
       }),
     })
     if (!res.ok) throw new Error(`DeepSeek API error: ${res.status}`)
