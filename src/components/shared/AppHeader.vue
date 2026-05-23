@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { Icon } from '@iconify/vue'
 import { useDarkMode } from '@/composables/useDarkMode'
 import { useUiState } from '@/composables/useUiState'
 import Button from 'primevue/button'
@@ -27,15 +28,6 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           @click="router.push('/orders/new')"
         />
         <Button
-          :icon="showAiPanel ? 'pi pi-chevron-right' : 'pi pi-chevron-left'"
-          severity="secondary"
-          size="small"
-          variant="outlined"
-          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
-          class="hidden xl:inline-flex"
-          @click="toggleAiPanel"
-        />
-        <Button
           :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
           severity="secondary"
           size="small"
@@ -43,6 +35,19 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           :title="isDark ? 'Modo claro' : 'Modo oscuro'"
           @click="toggle"
         />
+        <Button
+          severity="secondary"
+          size="small"
+          variant="outlined"
+          class="hidden xl:inline-flex"
+          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
+          @click="toggleAiPanel"
+        >
+          <Icon
+            :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'"
+            class="text-lg"
+          />
+        </Button>
       </nav>
     </div>
   </header>
