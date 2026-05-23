@@ -10,5 +10,5 @@ const label = computed(() => STATUS_LABELS[props.estado])
 </script>
 
 <template>
-  <Tag :value="label" :severity="severity" :class="size ?? 'text-sm'" />
+  <Tag :value="label" :severity="severity" :pt="{ value: { class: size ?? 'text-sm' } }" />
 </template>
