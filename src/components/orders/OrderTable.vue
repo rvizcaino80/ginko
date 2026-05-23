@@ -26,6 +26,8 @@ function formatDate(iso: string): string {
       :rows="10"
       :rows-per-page-options="[5, 10, 20]"
       sortable
+      sort-field="fechaCreacion"
+      :sort-order="-1"
       striped-rows
       selection-mode="single"
       @row-click="(e: { data: Order }) => emit('select', e.data.id)"

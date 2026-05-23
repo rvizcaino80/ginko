@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useAi } from '@/composables/useAi'
 import { useOrderStore } from '@/stores/orderStore'
+import { useUiState } from '@/composables/useUiState'
 import type { AiAction } from '@/composables/useAi'
 import { marked } from 'marked'
 import InputText from 'primevue/inputtext'
@@ -15,6 +16,7 @@ const input = ref('')
 const scrollRef = ref<HTMLDivElement>()
 const store = useOrderStore()
 const { messages, thinking, chat } = useAi()
+const { toggleAiPanel } = useUiState()
 
 onMounted(() => {
   store.loadAllOrders()
@@ -59,19 +61,21 @@ async function handleSend() {
 </script>
 
 <template>
-  <div class="flex flex-col h-full bg-white dark:bg-gray-900">
-    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+  <div class="flex flex-col h-full">
+    <div class="bg-stone-50 flex items-center justify-between p-6 border-b border-gray-300 dark:border-gray-800 h-18">
       <div class="flex items-center gap-2">
-        <Icon icon="mdi:robot-outline" class="text-blue-600 dark:text-blue-400 text-base" />
+        <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-2xl" />
         <span class="font-semibold">Asistente IA</span>
       </div>
-      <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-base" />
+      <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer" @click="toggleAiPanel">
+        <Icon icon="mdi:close" class="text-xl" />
+      </button>
     </div>
 
     <ScrollPanel class="flex-1">
       <div ref="scrollRef" class="flex flex-col gap-3 p-4">
         <div v-if="messages.length === 0" class="text-center py-8 text-gray-400 dark:text-gray-500 text-base">
-          <Icon icon="mdi:robot-outline" class="text-2xl block mb-3 mx-auto" />
+          <Icon icon="mdi:robot-outline" class="text-5xl block mb-3 mx-auto" />
           <p>Pregúntame sobre tus órdenes de pago.</p>
           <p class="text-sm mt-2">Ej: "Muéstrame la orden ORD-0001"</p>
           <p class="text-sm mt-1">Ej: "Filtra las aprobadas"</p>
@@ -109,10 +113,13 @@ async function handleSend() {
         @keydown.enter="handleSend"
       />
       <Button
-        icon="pi pi-send"
         :disabled="!input.trim() || thinking"
         @click="handleSend"
-      />
+      >
+        <template #icon>
+          <Icon icon="material-symbols:send" class="w-6 h-6" />
+        </template>
+      </Button>
     </div>
   </div>
 </template>
