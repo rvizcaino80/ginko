@@ -18,12 +18,15 @@ const statusOptions = computed(() => {
 
 <template>
   <div class="flex flex-col sm:flex-row gap-4 mb-6">
-    <div class="flex-1">
+    <div class="relative flex-1">
       <InputText
         v-model="model.q"
         placeholder="Buscar por proveedor..."
-        class="w-full"
+        class="w-full pr-10"
       />
+      <kbd
+        class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs text-slate-400 dark:text-slate-500 pointer-events-none"
+      >/</kbd>
     </div>
     <Select
       :model-value="model.status"
