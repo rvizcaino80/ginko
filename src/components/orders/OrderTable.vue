@@ -34,8 +34,11 @@ function formatDate(iso: string): string {
       <Column field="id" header="ID" sortable style="min-width: 8rem" />
       <Column field="proveedor" header="Proveedor" sortable style="min-width: 14rem" />
       <Column field="monto" header="Monto" sortable style="min-width: 10rem">
+        <template #header>
+          <div class="text-right">Monto</div>
+        </template>
         <template #body="{ data }">
-          <span class="font-mono">{{ formatCOP(data.monto) }}</span>
+          <div class="text-right font-mono">{{ formatCOP(data.monto) }}</div>
         </template>
       </Column>
       <Column field="concepto" header="Concepto" sortable style="min-width: 16rem">
