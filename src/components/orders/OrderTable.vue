@@ -69,6 +69,6 @@ function formatDate(iso: string): string {
   to { opacity: 1; transform: translateY(0); }
 }
 :deep(.text-right .p-column-header-content) {
-  justify-content: flex-end !important;
+  justify-content: end !important;
 }
 </style>
