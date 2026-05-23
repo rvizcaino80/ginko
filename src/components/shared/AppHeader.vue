@@ -46,7 +46,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           transform: showAiPanel ? 'translateX(80px)' : 'translateX(0)',
           opacity: showAiPanel ? 0 : 1,
           pointerEvents: showAiPanel ? 'none' : 'auto',
-          transition: 'all 1000ms ease-in-out',
+          transition: 'all 300ms ease-in-out',
         }"
         :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
         @click="toggleAiPanel"
