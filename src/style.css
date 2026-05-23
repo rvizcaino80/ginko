@@ -24,23 +24,27 @@ body {
 }
 
 .dark .p-datatable {
+  background: transparent;
+}
+
+.dark .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd > td {
   background: transparent !important;
 }
 
-.dark .p-datatable .p-datatable-thead > tr > th {
-  background: #0f172a !important;
-}
-
-.dark .p-datatable .p-datatable-tbody > tr > td {
-  background: transparent !important;
-}
-
-.dark .p-datatable .p-datatable-tbody > tr:nth-child(even) > td {
+.dark .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-even > td {
   background: #020617 !important;
+}
+
+.dark .p-datatable .p-datatable-tbody > tr:not(.p-row-odd):not(.p-row-even) > td {
+  background: transparent !important;
 }
 
 .dark .p-datatable .p-datatable-tbody > tr:hover > td {
   background: #1e293b !important;
+}
+
+.dark .p-datatable .p-datatable-thead > tr > th {
+  background: #0f172a !important;
 }
 
 .dark .p-paginator {
