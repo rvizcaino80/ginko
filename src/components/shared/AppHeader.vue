@@ -9,7 +9,7 @@ const { isDark, toggle } = useDarkMode()
 </script>
 
 <template>
-  <header class="flex items-center justify-between h-18 border-b border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+  <header class="flex items-center justify-between h-18 border-b border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-6">
     <button
       class="flex items-center gap-2 font-semibold tracking-tight hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
       @click="router.push('/')"
@@ -20,17 +20,21 @@ const { isDark, toggle } = useDarkMode()
     <h1 class="text-2xl font-bold">Órdenes de pago</h1>
 
     <nav class="flex items-center justify-stretch gap-4">
+      <Button size="medium" @click="router.push('/orders/new')">
+        <template #icon>
+          <Icon icon="mdi:plus" class="w-5 h-5" />
+        </template>
+        <span class="flex items-center gap-2">
+          Nueva orden
+          <kbd class="px-1.5 py-0.5 rounded border border-white/30 text-xs leading-none">N</kbd>
+        </span>
+      </Button>
       <Button
-        label="Nueva orden"
-        icon="pi pi-plus"
-        size="medium"
-        @click="router.push('/orders/new')"
-      />
-      <Button
-        severity="secondary"
+        severity="primary"
         variant="outlined"
         :title="isDark ? 'Modo claro' : 'Modo oscuro'"
         @click="toggle"
+        class="bg-slate-300"
       >
         <template #icon>
           <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
