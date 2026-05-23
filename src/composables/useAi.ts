@@ -59,22 +59,47 @@ function buildContextPrompt(orders: Order[]): string {
   )
 }
 
-function parseResponse(text: string): ChatResult {
-  const jsonMatch = text.match(/\{[\s\S]*?"action"[\s\S]*?\}/)
-  if (jsonMatch) {
-    try {
-      const parsed = JSON.parse(jsonMatch[0])
-      const prefix = text.slice(0, jsonMatch.index!).trim()
-      const msg = parsed.message || ''
-      const message = prefix ? `${prefix}\n\n${msg}` : msg
-      return {
-        message: message || text,
-        action: (parsed.action as AiAction) || null,
-      }
-    } catch {
-      // fall through
+function extractJsonBlock(text: string): string | null {
+  const start = text.indexOf('{')
+  if (start === -1) return null
+  let depth = 0
+  for (let i = start; i < text.length; i++) {
+    if (text[i] === '{') depth++
+    else if (text[i] === '}') {
+      depth--
+      if (depth === 0) return text.slice(start, i + 1)
     }
   }
+  return null
+}
+
+function parseResponse(text: string): ChatResult {
+  const trimmed = text.trim()
+  try {
+    const parsed = JSON.parse(trimmed)
+    if (parsed && typeof parsed === 'object' && parsed.action) {
+      return {
+        message: parsed.message || '',
+        action: parsed.action as AiAction,
+      }
+    }
+  } catch {}
+
+  const block = extractJsonBlock(text)
+  if (block) {
+    try {
+      const parsed = JSON.parse(block)
+      if (parsed && parsed.action) {
+        const prefix = text.slice(0, text.indexOf(block)).trim()
+        const msg = parsed.message || ''
+        return {
+          message: prefix ? `${prefix}\n\n${msg}` : msg,
+          action: parsed.action as AiAction,
+        }
+      }
+    } catch {}
+  }
+
   return { message: text, action: null }
 }
 
