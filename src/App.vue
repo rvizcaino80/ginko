@@ -18,8 +18,8 @@ useKeyboardShortcuts({
 </script>
 
 <template>
-  <div class="min-h-screen flex">
-    <div class="flex flex-col flex-1 min-w-0">
+  <div class="min-h-screen flex bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col flex-1 min-w-0 bg-white dark:bg-gray-900">
       <AppHeader />
       <main class="flex-1 p-6 overflow-auto">
         <RouterView />
