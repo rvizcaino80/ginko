@@ -41,7 +41,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
       <Button
         severity="secondary"
         variant="outlined"
-        class="hidden xl:flex p-2 transition-all duration-500 ease-in-out"
+        class="hidden xl:flex p-2 transition-all duration-1000 ease-in-out"
         :class="showAiPanel ? 'translate-x-20 opacity-0 pointer-events-none' : 'translate-x-0 opacity-100'"
         :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
         @click="toggleAiPanel"
