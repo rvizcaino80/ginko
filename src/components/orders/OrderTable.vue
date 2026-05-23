@@ -43,10 +43,7 @@ function formatDate(iso: string): string {
           {{ formatDate(data.fechaCreacion) }}
         </template>
       </Column>
-      <Column field="monto" sortable header-class="text-right" style="min-width: 10rem">
-        <template #header>
-          <span class="p-column-title">Monto</span>
-        </template>
+      <Column field="monto" header="Monto" sortable header-class="text-right" style="min-width: 10rem">
         <template #body="{ data }">
           <div class="text-right font-mono">{{ formatCOP(data.monto) }}</div>
         </template>
