@@ -23,18 +23,24 @@ const { showAiPanel, toggleAiPanel } = useUiState()
       <nav class="flex items-center gap-3">
         <Button
           label="Nueva orden"
-          icon="pi pi-plus"
           size="small"
           @click="router.push('/orders/new')"
-        />
+        >
+          <template #icon>
+            <Icon icon="mdi:plus" class="text-sm" />
+          </template>
+        </Button>
         <Button
-          :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
           severity="secondary"
           size="small"
           variant="outlined"
           :title="isDark ? 'Modo claro' : 'Modo oscuro'"
           @click="toggle"
-        />
+        >
+          <template #icon>
+            <Icon :icon="isDark ? 'mdi:weather-sunny' : 'mdi:weather-night'" class="text-sm" />
+          </template>
+        </Button>
         <Button
           severity="secondary"
           size="small"
@@ -44,10 +50,7 @@ const { showAiPanel, toggleAiPanel } = useUiState()
           @click="toggleAiPanel"
         >
           <template #icon>
-            <Icon
-              :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'"
-              class="text-sm"
-            />
+            <Icon :icon="showAiPanel ? 'mdi:robot' : 'mdi:robot-outline'" class="text-sm" />
           </template>
         </Button>
       </nav>
