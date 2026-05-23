@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useDarkMode } from '@/composables/useDarkMode'
+import { useUiState } from '@/composables/useUiState'
 import Button from 'primevue/button'
 
 const router = useRouter()
 const { isDark, toggle } = useDarkMode()
+const { showAiPanel, toggleAiPanel } = useUiState()
 </script>
 
 <template>
@@ -23,6 +25,15 @@ const { isDark, toggle } = useDarkMode()
           icon="pi pi-plus"
           size="small"
           @click="router.push('/orders/new')"
+        />
+        <Button
+          :icon="showAiPanel ? 'pi pi-chevron-right' : 'pi pi-chevron-left'"
+          severity="secondary"
+          size="small"
+          variant="outlined"
+          :title="showAiPanel ? 'Ocultar asistente' : 'Mostrar asistente'"
+          class="hidden xl:inline-flex"
+          @click="toggleAiPanel"
         />
         <Button
           :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
