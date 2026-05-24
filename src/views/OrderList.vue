@@ -20,7 +20,7 @@ async function load() {
   await store.loadOrders(filters.value)
 }
 
-watch(filters, load)
+watch(filters, load, { deep: true })
 onMounted(load)
 
 const sortedOrders = computed(() => {
@@ -49,15 +49,6 @@ useKeyboardShortcuts({
 
 <template>
   <div>
-    <div class="flex items-center justify-between mb-6">
-      <span class="text-sm text-slate-400 dark:text-slate-500 hidden sm:inline">
-        <kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">N</kbd>
-        {' '}nueva ·{' '}
-        <kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">/</kbd>
-        {' '}buscar
-      </span>
-    </div>
-
     <OrderFilters v-model="filters" />
 
     <LoadingState v-if="store.listApi.loading && store.orders.length === 0" />
