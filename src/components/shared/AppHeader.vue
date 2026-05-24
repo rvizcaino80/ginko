@@ -21,7 +21,9 @@ const { isDark, toggle } = useDarkMode()
     <h1 class="hidden lg:block text-2xl font-bold">Órdenes de pago</h1>
 
     <nav class="flex items-center justify-stretch gap-4">
-      <NewOrderButton class="hidden lg:inline-flex" size="medium" />
+      <div class="hidden lg:block">
+        <NewOrderButton size="medium" />
+      </div>
       <Button
         severity="primary"
         variant="outlined"
