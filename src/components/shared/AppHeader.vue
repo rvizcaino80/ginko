@@ -43,7 +43,7 @@ const { isDark, toggle } = useDarkMode()
 </template>
 
 <style scoped>
-.nueva-orden-btn .p-button-label::after {
+:deep(.nueva-orden-btn .p-button-label)::after {
   content: 'N';
   margin-left: 6px;
   padding: 1px 5px;
