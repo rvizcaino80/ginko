@@ -157,6 +157,19 @@ Monto: $12.500.000 COP
 
 ---
 
+## ✦ Capturas
+
+### Desktop
+![Listado de órdenes](screenshots/desktop-listado.png)
+![Detalle de orden](screenshots/desktop-detalle.png)
+![Asistente IA](screenshots/desktop-ia.png)
+
+### Mobile
+![Listado mobile](screenshots/mobile-listado.png)
+![Formulario creación](screenshots/mobile-creacion.png)
+
+---
+
 ## ✦ Stack tecnológico
 
 | Herramienta | Versión | ¿Por qué? |
