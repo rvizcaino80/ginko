@@ -16,15 +16,3 @@ const router = useRouter()
   />
 </template>
 
-<style scoped>
-:deep(.nueva-orden-btn .p-button-label)::after {
-  content: 'N';
-  margin-left: 8px;
-  padding: 2px 5px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.75);
-  font-size: 0.75rem;
-  line-height: 1;
-  color: black;
-}
-</style>
