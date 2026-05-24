@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useDarkMode } from '@/composables/useDarkMode'
 import Button from 'primevue/button'
+import NewOrderButton from '@/components/shared/NewOrderButton.vue'
 
 const router = useRouter()
 const { isDark, toggle } = useDarkMode()
@@ -20,13 +21,7 @@ const { isDark, toggle } = useDarkMode()
     <h1 class="hidden lg:block text-2xl font-bold">Órdenes de pago</h1>
 
     <nav class="flex items-center justify-stretch gap-4">
-      <Button
-        label="Nueva orden"
-        icon="pi pi-plus"
-        size="medium"
-        class="hidden lg:inline-flex nueva-orden-btn"
-        @click="router.push('/orders/new')"
-      />
+      <NewOrderButton class="hidden lg:inline-flex" size="medium" />
       <Button
         severity="primary"
         variant="outlined"
@@ -41,16 +36,3 @@ const { isDark, toggle } = useDarkMode()
     </nav>
   </header>
 </template>
-
-<style scoped>
-:deep(.nueva-orden-btn .p-button-label)::after {
-  content: 'N';
-  margin-left: 8px;
-  padding: 2px 5px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.75);
-  font-size: 0.75rem;
-  line-height: 1;
-  color: black;
-}
-</style>
