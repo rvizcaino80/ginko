@@ -165,8 +165,8 @@ Monto: $12.500.000 COP
 ![Modo oscuro](screenshots/desktop-dark.png)
 
 ### Mobile
-![Listado mobile](screenshots/mobile-listado.png)
-![Formulario creación](screenshots/mobile-creacion.png)
+![Listado mobile modo claro](screenshots/mobile-light.png)
+![Listado mobile modo oscuro](screenshots/mobile-dark.png)
 
 ---
 
