@@ -52,7 +52,7 @@ useKeyboardShortcuts({
   <div>
     <div class="lg:hidden flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold">Órdenes de pago</h1>
-      <NewOrderButton />
+      <NewOrderButton size="medium" />
     </div>
 
     <OrderFilters v-model="filters" />
