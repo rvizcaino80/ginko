@@ -167,6 +167,7 @@ Monto: $12.500.000 COP
 | **Pinia** | 3.0 | Estado global tipado, DevTools, modular por dominio |
 | **Vue Router** | 4.5 | Lazy loading, query params reactivos |
 | **Axios** | 1.7 | Interceptors, tipado de respuestas, más ergonómico que fetch |
+| **PrimeVue** | 4.3 | DataTable con sort/filter/paginator integrados, componentes maduros |
 | **Tailwind CSS** | 4.1 | Utilidades puras, sin componentes pesados, bundle mínimo |
 | **MSW** | 2.7 | Intercepción de red sin servidor externo, ideal para demos |
 | **Vitest** + VTU | 3.2 | Nativo de Vite, rápido, API idéntica a Jest |
@@ -178,6 +179,12 @@ Monto: $12.500.000 COP
 <summary><strong>🎯 Tailwind CSS en lugar de PrimeVue / Vuetify / Element Plus</strong></summary>
 
 El enunciado pide **componentización clara** y **responsividad cuidada**. Las bibliotecas de componentes agregan 200-500KB de CSS no utilizado, estilos difíciles de sobrescribir y una capa de abstracción que oscurece la responsabilidad de cada componente. Tailwind permite construir componentes a medida de forma declarativa, con props explícitas y cero estilos muertos. En un entorno bancario, cada KB importa.
+</details>
+
+<details>
+<summary><strong>🎯 PrimeVue para DataTable en lugar de tabla manual</strong></summary>
+
+PrimeVue DataTable proporciona ordenamiento por columnas, filtros, paginación integrada y modo oscuro out-of-the-box. Reemplazar esto con una tabla manual habría requerido cientos de líneas de código adicional. Se eligió PrimeVue específicamente por su DataTable, y el resto de componentes (Tag, Dialog, InputText, Select, Button) se usan por consistencia visual. El bundle de PrimeVue se importa bajo demanda.
 </details>
 
 <details>
@@ -314,19 +321,75 @@ npm run preview    # Servir build local
 ## ✦ Historial de commits
 
 ```
-8d780f0 docs: README del proyecto con instrucciones y decisiones técnicas
-2bb5e2e test: pruebas unitarias de StatusBadge y OrderFilters
-ea42881 feat: modo oscuro con toggle manual
-546f9a9 feat: asistente IA con DeepSeek
-2fd5cff feat: detalle de orden y transiciones de estado
-c6517ab feat: formulario de creación de órdenes con validaciones
-320d134 feat: vista de listado de órdenes con filtros y URL sync
-a6bae6f feat: componentes base de UI
-de243d3 feat: modelo de datos, mock API y store central
-40dcdd9 chore: configuración inicial del proyecto
+1159019 feat: botón mobile 'Nueva' size small, h1 mobile text-xl
+a33c971 fix: envuelve NewOrderButton en div hidden lg:block
+21f12db fix: unifica size medium en NewOrderButton mobile y desktop
+da65a29 fix: mueve CSS del badge N a style.css (global)
+93c74f5 refactor: NewOrderButton componente compartido
+4ed5303 chore: favicon apunta a favicon.png
+f265a51 feat: header responsive - h1 y botón se mueven a OrderList en mobile
+2ed938a fix: agrega deep: true al watch de filters
+41fb47e fix: usa :deep() para badge N visible
+87ffe3b feat: indicador de tecla N en botón Nueva orden
+a293888 feat: indicador de tecla / dentro del input de búsqueda
+d03968f fix: zebra stripes con slate-700/slate-800
+b57875a fix: dark mode usa p-row-even/p-row-odd
+2369f77 fix: simplifica dark mode tabla con hex directos
+f655e92 fix: dark mode tabla con zebra stripes, paginator, select
+525c19c fix: force overrides con selectores CSS directos
+d32b773 fix: overrides de PrimeVue dark mode
+4691a83 fix: migra todos los colores de gray a slate
+c2f8157 fix: PrimeVue surface colors slate a gray
+e27091a fix: fondo unificado bg-gray-50 / dark:bg-gray-900
+04b8940 feat: panel IA siempre visible en xl
+565160b fix: animación 300ms + unifica stone→gray
+7cd2983 feat: conceptos variados en seed, tabla text-sm
+357f9ec feat: orden default por fecha DESC + X cerrar panel IA
+661900c feat: columna Monto movida después de Fecha
+7777ef2 fix: clase correcta p-datatable-column-header-content
+61e385e fix: header Monto alineado a la derecha
+a0896d4 fix: header Monto con text-align right
+a682305 feat: columna Monto alineada a la derecha
+312ffea fix: parseResponse maneja action: null
+25ce1d3 fix: diálogo confirmación usa v-if
+ba78f9b fix: X del diálogo cierra con @update:visible
+6cd7fb4 fix: StatusBadge cambia rounded-full a rounded-md
+aa30f08 refactor: StatusBadge como span nativo con Tailwind
+e31fa61 fix: seed data determinista con PRNG
+1e28d67 fix: transiciones de estado usan Tags en vez de Buttons
+a58ce19 fix: reduce tamaños de iconos en AI sidebar
+687b2a6 fix: restaura padding del header
+062d91a fix: unifica iconos del header con Iconify
+50f2815 fix: botón IA usa #icon slot
+ead1c4c fix: botón IA al lado derecho del toggle dark mode
+f34be9b feat: toggle para mostrar/ocultar panel IA
+a2fb10b fix: sidebar IA en flujo flex
+bb24bfb feat: sidebar IA ocupa toda la altura
+bcead0f feat: cambia tamaño base de text-lg a text-base
+6119e2e feat: IA puede ordenar por monto, fecha o proveedor
+02b4b77 fix: IA recibe las 53 órdenes completas
+d1dc2a2 fix: IA usa allOrders en vez de orders (filtrado)
+7356ba4 fix: prompt de DeepSeek más preciso
+39d9385 fix: parseResponse con conteo de profundidad de llaves
+070be90 fix: parsing robusto de respuestas + markdown
+80a5be1 feat: DeepSeek puede ejecutar acciones en la app
+3b7e2c7 fix: cubre los 2 FAIL y 3 observaciones
+04e7283 fix: asistente IA con contexto real de órdenes
+c0d6200 refactor: migración completa a PrimeVue + Iconify + Inter + AI sidebar
+43d5703 docs: README pulido para GitHub con badges
+d57e17b docs: README del proyecto
+62b7582 test: pruebas unitarias de StatusBadge y OrderFilters
+e476d4d feat: modo oscuro con toggle manual
+3c92a03 feat: asistente IA con DeepSeek
+ae98cfb feat: detalle de orden y transiciones de estado
+75d782b feat: formulario de creación con validaciones
+479fc30 feat: vista de listado con filtros y URL sync
+7d13782 feat: componentes base de UI
+f4f27d5 feat: modelo de datos, mock API y store central
+f10fe0b chore: configuración inicial del proyecto
 ```
 
-Cada commit es **independiente, compilable y revisable**. El historial refleja una progresión lógica: primero la base técnica, luego los componentes, después las vistas, y finalmente las features transversales (IA, dark mode, tests, docs).
+Cada commit es **independiente, compilable y revisable**. 90 commits en total reflejan la evolución completa del proyecto.
 
 ---
 
