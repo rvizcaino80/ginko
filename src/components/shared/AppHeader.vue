@@ -20,15 +20,13 @@ const { isDark, toggle } = useDarkMode()
     <h1 class="text-2xl font-bold">Órdenes de pago</h1>
 
     <nav class="flex items-center justify-stretch gap-4">
-      <Button size="medium" @click="router.push('/orders/new')">
-        <template #icon>
-          <Icon icon="mdi:plus" class="w-5 h-5" />
-        </template>
-        <span class="flex items-center gap-2">
-          Nueva orden
-          <kbd class="px-1.5 py-0.5 rounded border border-white/30 text-xs leading-none">N</kbd>
-        </span>
-      </Button>
+      <Button
+        label="Nueva orden"
+        icon="pi pi-plus"
+        size="medium"
+        class="nueva-orden-btn"
+        @click="router.push('/orders/new')"
+      />
       <Button
         severity="primary"
         variant="outlined"
@@ -43,3 +41,15 @@ const { isDark, toggle } = useDarkMode()
     </nav>
   </header>
 </template>
+
+<style scoped>
+.nueva-orden-btn .p-button-label::after {
+  content: 'N';
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+</style>
