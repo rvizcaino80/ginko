@@ -160,9 +160,7 @@ Monto: $12.500.000 COP
 ## ✦ Capturas
 
 ### Desktop
-![Listado de órdenes](screenshots/desktop-listado.png)
-![Detalle de orden](screenshots/desktop-detalle.png)
-![Asistente IA](screenshots/desktop-ia.png)
+![Workflow completo: filtrado, detalle y transición de estado](screenshots/desktop-workflow.gif)
 
 ### Mobile
 ![Listado mobile](screenshots/mobile-listado.png)
