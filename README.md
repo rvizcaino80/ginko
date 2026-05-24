@@ -161,6 +161,7 @@ Monto: $12.500.000 COP
 
 ### Desktop
 ![Workflow completo: filtrado, detalle y transición de estado](screenshots/desktop-workflow.gif)
+![Asistente IA: consultas en lenguaje natural sobre las órdenes](screenshots/desktop-ai.gif)
 
 ### Mobile
 ![Listado mobile](screenshots/mobile-listado.png)
