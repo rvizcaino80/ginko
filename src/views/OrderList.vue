@@ -10,6 +10,7 @@ import OrderFilters from '@/components/orders/OrderFilters.vue'
 import LoadingState from '@/components/shared/LoadingState.vue'
 import ErrorState from '@/components/shared/ErrorState.vue'
 import EmptyState from '@/components/shared/EmptyState.vue'
+import Button from 'primevue/button'
 
 const route = useRoute()
 const router = useRouter()
@@ -49,6 +50,17 @@ useKeyboardShortcuts({
 
 <template>
   <div>
+    <div class="lg:hidden flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold">Órdenes de pago</h1>
+      <Button
+        label="Nueva orden"
+        icon="pi pi-plus"
+        size="small"
+        class="nueva-orden-btn-mobile"
+        @click="router.push('/orders/new')"
+      />
+    </div>
+
     <OrderFilters v-model="filters" />
 
     <LoadingState v-if="store.listApi.loading && store.orders.length === 0" />

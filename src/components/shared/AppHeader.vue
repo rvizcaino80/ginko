@@ -17,14 +17,14 @@ const { isDark, toggle } = useDarkMode()
       <img src="/logo.svg" alt="Ginko" class="h-10 w-auto" />
     </button>
 
-    <h1 class="text-2xl font-bold">Órdenes de pago</h1>
+    <h1 class="hidden lg:block text-2xl font-bold">Órdenes de pago</h1>
 
     <nav class="flex items-center justify-stretch gap-4">
       <Button
         label="Nueva orden"
         icon="pi pi-plus"
         size="medium"
-        class="nueva-orden-btn"
+        class="hidden lg:inline-flex nueva-orden-btn"
         @click="router.push('/orders/new')"
       />
       <Button
@@ -45,11 +45,12 @@ const { isDark, toggle } = useDarkMode()
 <style scoped>
 :deep(.nueva-orden-btn .p-button-label)::after {
   content: 'N';
-  margin-left: 6px;
-  padding: 1px 5px;
+  margin-left: 8px;
+  padding: 2px 5px;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.75);
   font-size: 0.75rem;
   line-height: 1;
+  color: black;
 }
 </style>
