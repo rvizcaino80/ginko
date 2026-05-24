@@ -60,14 +60,14 @@ async function handleSend() {
 
 <template>
   <div class="flex flex-1 flex-col h-full">
-    <div class="bg-slate-50 dark:bg-slate-900 flex items-center justify-between p-6 border-b border-slate-300 dark:border-slate-800 h-18">
+    <div class="bg-slate-50 dark:bg-slate-950 flex items-center justify-between p-6 border-b border-slate-300 dark:border-slate-700 h-18">
       <div class="flex items-center gap-2">
         <Icon icon="mdi:sparkles" class="text-blue-600 dark:text-blue-400 text-2xl" />
         <span class="font-semibold">Asistente IA</span>
       </div>
     </div>
 
-    <ScrollPanel class="flex-1">
+    <ScrollPanel class="flex-1 dark:bg-slate-800/20 bg-slate-100">
       <div ref="scrollRef" class="flex flex-col gap-3 p-4">
         <div v-if="messages.length === 0" class="text-center py-8 text-slate-400 dark:text-slate-500 text-base">
           <Icon icon="mdi:robot-outline" class="text-5xl block mb-3 mx-auto" />
@@ -85,14 +85,14 @@ async function handleSend() {
             class="rounded-xl px-4 py-3 max-w-[85%] overflow-hidden [&_strong]:font-semibold [&_p]:my-1 [&_ul]:my-1 [&_li]:ml-4"
             :class="
               msg.role === 'user'
-                ? 'bg-blue-600 text-white'
+                ? 'bg-blue-600 dark:bg-blue-800 text-white'
                 : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100'
             "
             v-html="msg.html"
           />
         </div>
         <div v-if="thinking" class="flex justify-start">
-          <div class="rounded-xl px-4 py-3 bg-slate-100 dark:bg-slate-800">
+          <div class="rounded-xl px-4 py-3 bg-slate-100 dark:bg-slate-900">
             <i class="pi pi-spin pi-spinner text-blue-600 dark:text-blue-400" />
             <span class="ml-2 text-sm text-slate-500">Pensando...</span>
           </div>
@@ -100,7 +100,7 @@ async function handleSend() {
       </div>
     </ScrollPanel>
 
-    <div class="border-t border-slate-200 dark:border-slate-800 p-3 flex gap-2">
+    <div class="border-t border-slate-200 dark:bg-slate-950  dark:border-slate-800 p-3 flex gap-2">
       <InputText
         v-model="input"
         placeholder="Escribe tu consulta..."

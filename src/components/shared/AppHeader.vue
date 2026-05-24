@@ -29,11 +29,12 @@ const { isDark, toggle } = useDarkMode()
         variant="outlined"
         :title="isDark ? 'Modo claro' : 'Modo oscuro'"
         @click="toggle"
-        class="bg-slate-300"
       >
         <template #icon>
           <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
         </template>
+
+
       </Button>
     </nav>
   </header>
