@@ -11,7 +11,6 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?logo=tailwindcss&logoColor=white)]()
 [![MSW](https://img.shields.io/badge/MSW-FF6A33?)]()
 
-[![DeepSeek AI](https://img.shields.io/badge/DeepSeek-4A6CF7?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04IDhzMy41OSA4IDggOCA4LTMuNTkgOC04LTMuNTktOC04LTh6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==&logoColor=white)]()
 [![Tests](https://img.shields.io/badge/tests-11_✔️-2ea44f)]()
 [![Build](https://img.shields.io/badge/build-passing-2ea44f)]()
 
@@ -23,7 +22,7 @@
 
 ## ✦ Overview
 
-Ginko Payments es una SPA de gestión de pagos a proveedores construida con **Vue 3 + TypeScript**. Simula un entorno de banca empresarial con responsividad en mobile, tablet y desktop, más de 50 órdenes semilla realistas, y un **asistente de IA conversacional** potenciado por DeepSeek.
+Ginko Payments es una SPA de gestión de pagos a proveedores construida con **Vue 3 + TypeScript**. Simula un entorno de banca empresarial con responsividad en mobile, tablet y desktop, con más de 50 órdenes semilla realistas.
 
 ---
 
@@ -37,8 +36,6 @@ npm run dev
 ```
 
 No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llamadas a `/api/*` desde el Service Worker del navegador.
-
-> **AI sidebar**: El panel del asistente IA solo aparece si se detecta una clave de DeepSeek válida configurada en `.env`. Sin ella, la app funciona completa pero sin el asistente.
 
 ---
 
@@ -92,8 +89,7 @@ No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llam
 | Composable `useApi` (loading/error unificado) | ✅ |
 | Optimistic updates | ✅ |
 | Modo oscuro con toggle | ✅ |
-| Transiciones suaves (modal, asistente) | ✅ |
-| **Asistente IA con DeepSeek** (copiloto conversacional) | ✅ |
+| Transiciones suaves (modal) | ✅ |
 | Atajos de teclado | ⏳ Pendiente |
 
 ---
@@ -125,7 +121,6 @@ No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llam
 | **Tailwind CSS** | 4.1 | Utilidades puras, sin componentes pesados, bundle mínimo |
 | **MSW** | 2.7 | Intercepción de red sin servidor externo, ideal para demos |
 | **Vitest** + VTU | 3.2 | Nativo de Vite, rápido, API idéntica a Jest |
-| **DeepSeek API** | v4-flash | Modelo rápido, económico, compatible OpenAI API |
 
 ### Decisiones de diseño
 
@@ -242,13 +237,7 @@ cd ginko-payments
 # 2. Dependencias
 npm install
 
-# 3. (Opcional) API key de DeepSeek para el asistente IA
-cp .env.example .env
-# Editar .env con tu clave:
-#   VITE_DEEPSEEK_API_KEY=sk-tu-clave
-#   VITE_DEEPSEEK_MODEL=deepseek-v4-flash
-
-# 4. ¡A volar!
+# 3. ¡A volar!
 npm run dev
 ```
 
@@ -282,7 +271,6 @@ Lo que no se completó (con justificación) y cómo se abordaría con más tiemp
 | 4 | **Manejo de error granular** | Media | Los errores se muestran genéricamente | Mapeo de códigos HTTP a mensajes específicos por dominio |
 | 5 | **Responsividad tablet** | Baja | Los breakpoints actuales (768px) funcionan, pero tablet podría beneficiarse de un nivel intermedio | Breakpoint `lg` adicional con layout híbrido |
 | 6 | **Pruebas de integración** | Alta | Se priorizaron las unitarias por tiempo (11 tests en 2 componentes) | Cypress o Playwright para flujo crear → detalle → transicionar |
-| 7 | **Proxy para API key** | Alta | En producción bancaria la API key no debe exponerse al cliente | Endpoint `/api/ai/proxy` en el backend corporativo |
 
 ---
 
