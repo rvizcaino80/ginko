@@ -25,15 +25,6 @@
 
 Ginko Payments es una SPA de gestión de pagos a proveedores construida con **Vue 3 + TypeScript**. Simula un entorno de banca empresarial con responsividad en mobile, tablet y desktop, más de 50 órdenes semilla realistas, y un **asistente de IA conversacional** potenciado por DeepSeek.
 
-**Valores diferenciales del entregable:**
-- **10 commits atómicos** con mensajes descriptivos en español
-- **IA integrada** (DeepSeek v4 flash) — copiloto + sugerencias de concepto
-- **Optimistic updates** en transiciones de estado
-- **Modo oscuro** con toggle manual
-- **11 pruebas unitarias** en componentes significativos
-- **0 dependencias** de componentes UI pesadas (Tailwind puro)
-- **Sin backend** — MSW mockea toda la API a nivel Service Worker
-
 ---
 
 ## ✦ Demo rápida
@@ -46,58 +37,6 @@ npm run dev
 ```
 
 No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llamadas a `/api/*` desde el Service Worker del navegador.
-
----
-
-## ✦ Feature estrella: Asistente IA con DeepSeek
-
-La aplicación integra inteligencia artificial en dos modalidades, todo conectado directamente a la API de DeepSeek:
-
-### 🤖 Copiloto conversacional
-Botón flotante en la esquina inferior derecha. Abre un chat donde el usuario puede preguntar en **lenguaje natural** sobre sus órdenes de pago. El asistente entiende el contexto de la aplicación y puede responder preguntas como:
-- *"¿Cuántas órdenes hay en borrador?"*
-- *"Muéstrame las aprobadas de este mes"*
-- *"¿Cuál es el total de pagos rechazados?"*
-
-### ✨ Sugerencia inteligente de concepto
-En el formulario de **nueva orden**, un botón "Sugerir con IA" envía el nombre del proveedor y el monto a DeepSeek, que genera automáticamente un concepto de pago profesional.
-
-```
-Proveedor: "Ingeniería y Construcciones SAS"
-Monto: $12.500.000 COP
-
-→ "Pago de honorarios por consultoría estructural — abril 2026"
-```
-
-### Arquitectura de la feature IA
-
-```
-┌─────────────────────────────────────────────────┐
-│               Navegador (cliente)                │
-│                                                  │
-│  ┌─────────────┐        ┌────────────────────┐  │
-│  │ AiAssistant  │        │   ConceptSuggest   │  │
-│  │  (flotante)  │        │  (botón en forma)  │  │
-│  └──────┬──────┘        └─────────┬──────────┘  │
-│         │                         │              │
-│         └──────────┬──────────────┘              │
-│                    │                             │
-│           ┌────────▼────────┐                    │
-│           │   useAi.ts      │                    │
-│           │  (composable)   │                    │
-│           └────────┬────────┘                    │
-│                    │ fetch()                      │
-└────────────────────┼─────────────────────────────┘
-                     │
-                     ▼
-        ┌────────────────────────┐
-        │   DeepSeek API         │
-        │   /v1/chat/completions │
-        │   Model: v4-flash      │
-        └────────────────────────┘
-```
-
-> **Nota para producción:** En un entorno bancario real, esta llamada pasaría por un proxy backend propio para no exponer la API key al cliente. Para esta prueba técnica es intencional y está documentado.
 
 ---
 
@@ -152,7 +91,7 @@ Monto: $12.500.000 COP
 | Optimistic updates | ✅ |
 | Modo oscuro con toggle | ✅ |
 | Transiciones suaves (modal, asistente) | ✅ |
-| **Asistente IA con DeepSeek** (copiloto + sugerencias) | ✅ |
+| **Asistente IA con DeepSeek** (copiloto conversacional) | ✅ |
 | Atajos de teclado | ⏳ Pendiente |
 
 ---
@@ -242,13 +181,11 @@ src/
 │
 ├── components/
 │   ├── ai/
-│   │   ├── AiAssistant.vue   # Chat flotante conectado a DeepSeek
-│   │   └── ConceptSuggest.vue # Botón "Sugerir con IA" en el formulario
+│   │   └── AiAssistant.vue   # Chat conectado a DeepSeek
 │   ├── orders/
 │   │   ├── OrderTable.vue    # Vista desktop: tabla con todos los atributos
 │   │   ├── OrderCard.vue     # Vista mobile: tarjetas apiladas
-│   │   ├── OrderFilters.vue  # Input búsqueda + select estado
-│   │   └── Pagination.vue    # Controles Anterior/Siguiente
+│   │   └── OrderFilters.vue  # Input búsqueda + select estado
 │   ├── shared/
 │   │   ├── StatusBadge.vue   # Indicador visual de estado (4 colores)
 │   │   ├── ConfirmDialog.vue # Modal de confirmación reutilizable
@@ -328,81 +265,6 @@ npm run test:watch # Modo desarrollo
 npm run build      # → dist/
 npm run preview    # Servir build local
 ```
-
----
-
-## ✦ Historial de commits
-
-```
-1159019 feat: botón mobile 'Nueva' size small, h1 mobile text-xl
-a33c971 fix: envuelve NewOrderButton en div hidden lg:block
-21f12db fix: unifica size medium en NewOrderButton mobile y desktop
-da65a29 fix: mueve CSS del badge N a style.css (global)
-93c74f5 refactor: NewOrderButton componente compartido
-4ed5303 chore: favicon apunta a favicon.png
-f265a51 feat: header responsive - h1 y botón se mueven a OrderList en mobile
-2ed938a fix: agrega deep: true al watch de filters
-41fb47e fix: usa :deep() para badge N visible
-87ffe3b feat: indicador de tecla N en botón Nueva orden
-a293888 feat: indicador de tecla / dentro del input de búsqueda
-d03968f fix: zebra stripes con slate-700/slate-800
-b57875a fix: dark mode usa p-row-even/p-row-odd
-2369f77 fix: simplifica dark mode tabla con hex directos
-f655e92 fix: dark mode tabla con zebra stripes, paginator, select
-525c19c fix: force overrides con selectores CSS directos
-d32b773 fix: overrides de PrimeVue dark mode
-4691a83 fix: migra todos los colores de gray a slate
-c2f8157 fix: PrimeVue surface colors slate a gray
-e27091a fix: fondo unificado bg-gray-50 / dark:bg-gray-900
-04b8940 feat: panel IA siempre visible en xl
-565160b fix: animación 300ms + unifica stone→gray
-7cd2983 feat: conceptos variados en seed, tabla text-sm
-357f9ec feat: orden default por fecha DESC + X cerrar panel IA
-661900c feat: columna Monto movida después de Fecha
-7777ef2 fix: clase correcta p-datatable-column-header-content
-61e385e fix: header Monto alineado a la derecha
-a0896d4 fix: header Monto con text-align right
-a682305 feat: columna Monto alineada a la derecha
-312ffea fix: parseResponse maneja action: null
-25ce1d3 fix: diálogo confirmación usa v-if
-ba78f9b fix: X del diálogo cierra con @update:visible
-6cd7fb4 fix: StatusBadge cambia rounded-full a rounded-md
-aa30f08 refactor: StatusBadge como span nativo con Tailwind
-e31fa61 fix: seed data determinista con PRNG
-1e28d67 fix: transiciones de estado usan Tags en vez de Buttons
-a58ce19 fix: reduce tamaños de iconos en AI sidebar
-687b2a6 fix: restaura padding del header
-062d91a fix: unifica iconos del header con Iconify
-50f2815 fix: botón IA usa #icon slot
-ead1c4c fix: botón IA al lado derecho del toggle dark mode
-f34be9b feat: toggle para mostrar/ocultar panel IA
-a2fb10b fix: sidebar IA en flujo flex
-bb24bfb feat: sidebar IA ocupa toda la altura
-bcead0f feat: cambia tamaño base de text-lg a text-base
-6119e2e feat: IA puede ordenar por monto, fecha o proveedor
-02b4b77 fix: IA recibe las 53 órdenes completas
-d1dc2a2 fix: IA usa allOrders en vez de orders (filtrado)
-7356ba4 fix: prompt de DeepSeek más preciso
-39d9385 fix: parseResponse con conteo de profundidad de llaves
-070be90 fix: parsing robusto de respuestas + markdown
-80a5be1 feat: DeepSeek puede ejecutar acciones en la app
-3b7e2c7 fix: cubre los 2 FAIL y 3 observaciones
-04e7283 fix: asistente IA con contexto real de órdenes
-c0d6200 refactor: migración completa a PrimeVue + Iconify + Inter + AI sidebar
-43d5703 docs: README pulido para GitHub con badges
-d57e17b docs: README del proyecto
-62b7582 test: pruebas unitarias de StatusBadge y OrderFilters
-e476d4d feat: modo oscuro con toggle manual
-3c92a03 feat: asistente IA con DeepSeek
-ae98cfb feat: detalle de orden y transiciones de estado
-75d782b feat: formulario de creación con validaciones
-479fc30 feat: vista de listado con filtros y URL sync
-7d13782 feat: componentes base de UI
-f4f27d5 feat: modelo de datos, mock API y store central
-f10fe0b chore: configuración inicial del proyecto
-```
-
-Cada commit es **independiente, compilable y revisable**. 90 commits en total reflejan la evolución completa del proyecto.
 
 ---
 
