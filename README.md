@@ -90,7 +90,7 @@ No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llam
 | Optimistic updates | ✅ |
 | Modo oscuro con toggle | ✅ |
 | Transiciones suaves (modal) | ✅ |
-| Atajos de teclado | ⏳ Pendiente |
+| Atajos de teclado | ✅ |
 
 ---
 
