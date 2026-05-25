@@ -237,7 +237,13 @@ cd ginko-payments
 # 2. Dependencias
 npm install
 
-# 3. ¡A volar!
+# 3. (Opcional) API key de DeepSeek para el asistente IA
+cp .env.example .env
+# Editar .env con tu clave:
+#   VITE_DEEPSEEK_API_KEY=sk-tu-clave
+#   VITE_DEEPSEEK_MODEL=deepseek-v4-flash
+
+# 4. ¡A volar!
 npm run dev
 ```
 
