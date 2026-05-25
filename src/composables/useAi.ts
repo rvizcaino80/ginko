@@ -174,18 +174,5 @@ export function useAi() {
     return result
   }
 
-  async function suggestConcept(proveedor: string, monto: number): Promise<string> {
-    const prompt =
-      `Sugiere un concepto de pago profesional para "${proveedor}" por ` +
-      `$${monto.toLocaleString('es-CO')} COP. Responde solo con el texto del concepto, máximo 250 caracteres.`
-    const systemPrompt =
-      'Eres un asistente financiero que ayuda a generar conceptos de pago claros y profesionales. Responde únicamente con el texto del concepto sugerido, sin explicaciones.'
-    const response = await callApi([
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: prompt },
-    ])
-    return response || ''
-  }
-
-  return { messages, thinking, chat, suggestConcept }
+  return { messages, thinking, chat }
 }

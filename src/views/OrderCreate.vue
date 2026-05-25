@@ -7,7 +7,6 @@ import InputNumber from 'primevue/inputnumber'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
-import ConceptSuggest from '@/components/ai/ConceptSuggest.vue'
 
 const router = useRouter()
 const store = useOrderStore()
@@ -95,11 +94,6 @@ async function submit() {
         <div class="flex items-center justify-between">
           <label class="font-medium">Concepto</label>
           <div class="flex items-center gap-3">
-            <ConceptSuggest
-              :proveedor="proveedor"
-              :monto="monto"
-              @suggest="(t: string) => concepto = t"
-            />
             <span class="text-sm text-slate-400 dark:text-slate-500">({{ conceptoCount }}/250)</span>
           </div>
         </div>
