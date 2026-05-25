@@ -38,6 +38,8 @@ npm run dev
 
 No necesitas backend, ni Docker, ni base de datos. MSW intercepta todas las llamadas a `/api/*` desde el Service Worker del navegador.
 
+> **AI sidebar**: El panel del asistente IA solo aparece si se detecta una clave de DeepSeek válida configurada en `.env`. Sin ella, la app funciona completa pero sin el asistente.
+
 ---
 
 ## ✦ Funcionalidades implementadas
