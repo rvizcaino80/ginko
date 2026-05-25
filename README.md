@@ -281,6 +281,6 @@ Lo que no se completó (con justificación) y cómo se abordaría con más tiemp
 
 <div align="center">
 
-**Construido por Rogers Vizcaino — rvizcaino80**
+**Construido por Rogers Vizcaino para la prueba técnica de Ginko Financial Solutions**
 
 </div>
