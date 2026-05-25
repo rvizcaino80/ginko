@@ -231,8 +231,8 @@ src/
 
 ```bash
 # 1. Clonar
-git clone <url-del-repositorio>
-cd ginko-payments
+git clone git@github.com:rvizcaino80/ginko.git
+cd ginko
 
 # 2. Dependencias
 npm install
