@@ -281,8 +281,6 @@ Lo que no se completó (con justificación) y cómo se abordaría con más tiemp
 
 <div align="center">
 
-**Construido con ❤️ para la prueba técnica de Ginko Financial Solutions**
-
-Mayo 2026 · Bogotá, Colombia
+**Construido por Rogers Vizcaino — rvizcaino80**
 
 </div>
