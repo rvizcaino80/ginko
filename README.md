@@ -271,12 +271,11 @@ Lo que no se completó (con justificación) y cómo se abordaría con más tiemp
 
 | # | Pendiente | Prioridad | Por qué quedó fuera | Abordaje futuro |
 |---|---|---|---|---|
-| 1 | **Atajos de teclado** | Media | Requiere mapa de atajos y composable `useKeyboardShortcuts` que no interfiera con inputs | Composable con `onKeyDown` y hotkeys modales |
-| 2 | **Animaciones en transiciones del listado** | Baja | El optimistic update ya da feedback inmediato; la animación extra es cosmética | `<TransitionGroup>` en OrderTable y OrderCard |
-| 3 | **Modo oscuro persistente** | Baja | El toggle funciona en sesión pero no persiste | `localStorage` en `useDarkMode` |
-| 4 | **Manejo de error granular** | Media | Los errores se muestran genéricamente | Mapeo de códigos HTTP a mensajes específicos por dominio |
-| 5 | **Responsividad tablet** | Baja | Los breakpoints actuales (768px) funcionan, pero tablet podría beneficiarse de un nivel intermedio | Breakpoint `lg` adicional con layout híbrido |
-| 6 | **Pruebas de integración** | Alta | Se priorizaron las unitarias por tiempo (11 tests en 2 componentes) | Cypress o Playwright para flujo crear → detalle → transicionar |
+| 1 | **Animaciones en transiciones del listado** | Baja | El optimistic update ya da feedback inmediato; la animación extra es cosmética | `<TransitionGroup>` en OrderTable y OrderCard |
+| 2 | **Modo oscuro persistente** | Baja | El toggle funciona en sesión pero no persiste | `localStorage` en `useDarkMode` |
+| 3 | **Manejo de error granular** | Media | Los errores se muestran genéricamente | Mapeo de códigos HTTP a mensajes específicos por dominio |
+| 4 | **Responsividad tablet** | Baja | Los breakpoints actuales (768px) funcionan, pero tablet podría beneficiarse de un nivel intermedio | Breakpoint `lg` adicional con layout híbrido |
+| 5 | **Pruebas de integración** | Alta | Se priorizaron las unitarias por tiempo (11 tests en 2 componentes) | Cypress o Playwright para flujo crear → detalle → transicionar |
 
 ---
 
