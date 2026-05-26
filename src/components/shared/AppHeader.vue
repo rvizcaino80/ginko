@@ -1,12 +1,24 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+import type { Ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useDarkMode } from '@/composables/useDarkMode'
 import Button from 'primevue/button'
 import NewOrderButton from '@/components/shared/NewOrderButton.vue'
+import { useOrderStore } from '@/stores/orderStore'
 
 const router = useRouter()
+const store = useOrderStore()
+const showAiAssistant = inject('show-ai-assistant') as Ref<boolean>
 const { isDark, toggle } = useDarkMode()
+
+function openCreateModal() {
+  store.showCreateModal = true
+}
+function toggleAi() {
+  showAiAssistant.value = !showAiAssistant.value
+}
 </script>
 
 <template>
@@ -22,8 +34,18 @@ const { isDark, toggle } = useDarkMode()
 
     <nav class="flex items-center justify-stretch gap-4">
       <div class="hidden lg:block">
-        <NewOrderButton size="medium" />
+        <NewOrderButton size="medium" @create-order-modal="openCreateModal" />
       </div>
+      <Button
+        severity="primary"
+        variant="outlined"
+        :title="showAiAssistant ? 'Ocultar asistente' : 'Mostrar asistente'"
+        @click="toggleAi"
+      >
+        <template #icon>
+          <Icon :icon="showAiAssistant ? 'mdi:robot-off' : 'mdi:robot'" class="w-6 h-6" />
+        </template>
+      </Button>
       <Button
         severity="primary"
         variant="outlined"
@@ -33,8 +55,6 @@ const { isDark, toggle } = useDarkMode()
         <template #icon>
           <Icon :icon="isDark ? 'mdi:white-balance-sunny' : 'mdi:moon-waxing-crescent'" class="w-6 h-6" />
         </template>
-
-
       </Button>
     </nav>
   </header>

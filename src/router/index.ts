@@ -8,11 +8,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/OrderList.vue'),
   },
   {
-    path: '/orders/new',
-    name: 'order-create',
-    component: () => import('@/views/OrderCreate.vue'),
-  },
-  {
     path: '/orders/:id',
     name: 'order-detail',
     component: () => import('@/views/OrderDetail.vue'),

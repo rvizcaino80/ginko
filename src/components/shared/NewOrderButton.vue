@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 
 defineProps<{ size?: string; short?: boolean }>()
-const router = useRouter()
+const emit = defineEmits<{ 'create-order-modal': [] }>()
 </script>
 
 <template>
@@ -12,7 +11,6 @@ const router = useRouter()
     icon="pi pi-plus"
     :size="size ?? 'small'"
     class="nueva-orden-btn"
-    @click="router.push('/orders/new')"
+    @click="emit('create-order-modal')"
   />
 </template>
-

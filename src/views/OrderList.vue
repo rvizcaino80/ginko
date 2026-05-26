@@ -6,6 +6,7 @@ import { useFilters } from '@/composables/useFilters'
 import { useKeyboardShortcuts } from '@/composables/useKeyboardShortcuts'
 import OrderTable from '@/components/orders/OrderTable.vue'
 import OrderCard from '@/components/orders/OrderCard.vue'
+import OrderCreateModal from '@/components/orders/OrderCreateModal.vue'
 import OrderFilters from '@/components/orders/OrderFilters.vue'
 import LoadingState from '@/components/shared/LoadingState.vue'
 import ErrorState from '@/components/shared/ErrorState.vue'
@@ -20,6 +21,7 @@ const { filters } = useFilters()
 async function load() {
   await store.loadOrders(filters.value)
 }
+
 
 watch(filters, load, { deep: true })
 onMounted(load)
@@ -46,16 +48,22 @@ useKeyboardShortcuts({
     input?.focus()
   },
 })
+
+function showCreateModal() {
+  store.showCreateModal = true
+}
 </script>
 
 <template>
   <div>
     <div class="lg:hidden flex items-center justify-between mb-6">
       <h1 class="text-xl lg:text-2xl font-bold">Órdenes de pago</h1>
-      <NewOrderButton size="small" short />
+      <NewOrderButton size="small" short @create-order-modal="showCreateModal" />
     </div>
 
     <OrderFilters v-model="filters" />
+
+    <OrderCreateModal :visible="store.showCreateModal" @close="store.showCreateModal = false" />
 
     <LoadingState v-if="store.listApi.loading && store.orders.length === 0" />
 

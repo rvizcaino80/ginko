@@ -102,6 +102,10 @@ function formatDate(iso: string): string {
           <span class="text-slate-500 dark:text-slate-400">Fecha de creación</span>
           <span class="text-right">{{ formatDate(store.currentOrder.fechaCreacion) }}</span>
         </div>
+        <div class="flex justify-between py-4">
+          <span class="text-slate-500 dark:text-slate-400">Fecha de vencimiento</span>
+          <span class="text-right">{{ formatDate(store.currentOrder.fechaVencimiento) }}</span>
+        </div>
       </div>
 
       <div v-if="allowedTransitions().length > 0" class="pt-4 dark:border-slate-800">

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Order } from '@/types/order'
 import DataTable from 'primevue/datatable'
+import Button from 'primevue/button'
 import Column from 'primevue/column'
+import Tag from 'primevue/tag'
 import StatusBadge from '@/components/shared/StatusBadge.vue'
 
 defineProps<{ orders: Order[] }>()
@@ -13,8 +15,18 @@ function formatCOP(amount: number): string {
   }).format(amount)
 }
 
-function formatDate(iso: string): string {
-  return new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' }).format(new Date(iso))
+function formatDate(iso: string | undefined | null): string {
+  if (!iso) return '-'
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return '-'
+  return new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' }).format(d)
+}
+
+function isOverdue(iso: string | undefined | null): boolean {
+  if (!iso) return false
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return false
+  return d < new Date(new Date().toDateString())
 }
 </script>
 
@@ -45,6 +57,14 @@ function formatDate(iso: string): string {
           {{ formatDate(data.fechaCreacion) }}
         </template>
       </Column>
+      <Column field="fechaVencimiento" header="Fecha Vencimiento" sortable style="min-width: 10rem">
+        <template #body="{ data }">
+          <div class="flex items-center gap-2">
+            <span>{{ formatDate(data.fechaVencimiento) }}</span>
+            <Tag v-if="isOverdue(data.fechaVencimiento)" value="Vencida" severity="secondary" class="text-xs" />
+          </div>
+        </template>
+      </Column>
       <Column field="monto" header="Monto" sortable header-class="text-right" style="min-width: 10rem">
         <template #body="{ data }">
           <div class="text-right font-mono">{{ formatCOP(data.monto) }}</div>
@@ -55,6 +75,21 @@ function formatDate(iso: string): string {
           <StatusBadge :estado="data.estado" />
         </template>
       </Column>
+      <Column header="Acciones">
+            <template #body>
+            <div class="flex items-center gap-2">
+              <Button
+                label="Editar"
+                size="small"
+              />
+              <Button
+                label="Eliminar"
+                size="small"
+                severity="danger"
+              />
+            </div>
+            </template>
+        </Column>
     </DataTable>
   </div>
 </template>

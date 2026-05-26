@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useOrderStore } from '@/stores/orderStore'
+import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
+import DatePicker from 'primevue/datepicker'
 
-const router = useRouter()
+defineProps<{ visible: boolean }>()
+const emit = defineEmits<{ close: [] }>()
 const store = useOrderStore()
 
 const proveedor = ref('')
 const monto = ref<number | null>(null)
 const concepto = ref('')
+const fechaVencimiento = ref<Date | null>(null)
 const submitting = ref(false)
 const submitError = ref('')
 
@@ -36,9 +39,21 @@ const conceptoError = computed(() => {
   return ''
 })
 
+const fechaVencimientoError = computed(() => {
+  if (!fechaVencimiento.value) return 'La fecha de vencimiento es requerida'
+  return ''
+})
+
 const valid = computed(
-  () => !proveedorError.value && !montoError.value && !conceptoError.value,
+  () => !proveedorError.value && !montoError.value && !conceptoError.value && !fechaVencimientoError.value,
 )
+
+function formatDate(date: Date): string {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
 
 async function submit() {
   if (!valid.value || submitting.value) return
@@ -49,20 +64,40 @@ async function submit() {
       proveedor: proveedor.value.trim(),
       monto: monto.value!,
       concepto: concepto.value.trim(),
+      fechaVencimiento: formatDate(fechaVencimiento.value!),
     })
-    router.push('/')
+    resetForm()
+    emit('close')
   } catch {
     submitError.value = 'Error al crear la orden. Intenta de nuevo.'
   } finally {
     submitting.value = false
   }
 }
+
+function resetForm() {
+  proveedor.value = ''
+  monto.value = null
+  concepto.value = ''
+  fechaVencimiento.value = null
+  submitError.value = ''
+}
+
+function onHide() {
+  resetForm()
+  emit('close')
+}
 </script>
 
 <template>
-  <div class="max-w-xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6">Nueva orden de pago</h1>
-
+  <Dialog
+    :visible="visible"
+    header="Nueva orden de pago"
+    modal
+    closable
+    class="w-full max-w-xl"
+    @update:visible="(val: boolean) => { if (!val) onHide() }"
+  >
     <form class="flex flex-col gap-5" @submit.prevent="submit">
       <div class="flex flex-col gap-1">
         <label class="font-medium">Proveedor</label>
@@ -93,9 +128,7 @@ async function submit() {
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-between">
           <label class="font-medium">Concepto</label>
-          <div class="flex items-center gap-3">
-            <span class="text-sm text-slate-400 dark:text-slate-500">({{ conceptoCount }}/250)</span>
-          </div>
+          <span class="text-sm text-slate-400 dark:text-slate-500">({{ conceptoCount }}/250)</span>
         </div>
         <Textarea
           v-model="concepto"
@@ -108,16 +141,34 @@ async function submit() {
         <small v-if="concepto.trim() && conceptoError" class="text-red-500">{{ conceptoError }}</small>
       </div>
 
+      <div class="flex flex-col gap-1">
+        <label class="font-medium">Fecha Vencimiento</label>
+        <DatePicker
+          v-model="fechaVencimiento"
+          :invalid="fechaVencimiento !== null && !!fechaVencimientoError"
+        />
+        <small v-if="fechaVencimiento !== null && fechaVencimientoError" class="text-red-500">{{ fechaVencimientoError }}</small>
+      </div>
+
       <Message v-if="submitError" severity="error" :life="5000">
         {{ submitError }}
       </Message>
 
-      <Button
-        type="submit"
-        label="Crear orden"
-        :loading="submitting"
-        :disabled="!valid"
-      />
+      <div class="flex justify-end gap-3 pt-2">
+        <Button
+          label="Cancelar"
+          severity="secondary"
+          variant="outlined"
+          size="small"
+          @click="onHide"
+        />
+        <Button
+          type="submit"
+          label="Crear orden"
+          :loading="submitting"
+          :disabled="!valid"
+        />
+      </div>
     </form>
-  </div>
+  </Dialog>
 </template>
